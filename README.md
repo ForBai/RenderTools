@@ -1,8 +1,12 @@
-# OneConfigExampleMod
-Example mod implementing OneConfig.
+# RenderTools
+A Mod That adds various rendering things to make life easier and more fun.
 
-## How to use
+# Credits
+Big thanks to following Creators:
+- Oringo: For many of the rendering features
+- PolyFrost: For the Config system and Command system
 
-- Copy the template either by using GitHub's "Use this template" feature or downloading the repo manually.
-- **Remove the license named "LICENSE-TEMPLATE" and choose a new one.**
-- Refactor the template (specifically, the modid, version and name in the gradle.properties and most of the class names) to a different name.
+If you dont find your name here, please contact me(Anemoi#7990).
+And if you want any other things added just create a pull request, issue or contact me.
+
+# Thanks for using my mod!
