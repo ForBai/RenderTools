@@ -1,4 +1,4 @@
-package cc.polyfrost.example.hud;
+package me.anemoi.rendertools.hud;
 
 import cc.polyfrost.oneconfig.hud.SingleTextHud;
 import net.minecraft.client.Minecraft;

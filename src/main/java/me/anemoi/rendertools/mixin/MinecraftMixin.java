@@ -1,4 +1,4 @@
-package cc.polyfrost.example.mixin;
+package me.anemoi.rendertools.mixin;
 
 import net.minecraft.client.Minecraft;
 import org.spongepowered.asm.mixin.Mixin;
