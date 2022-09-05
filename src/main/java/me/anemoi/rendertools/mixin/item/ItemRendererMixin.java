@@ -1,4 +1,4 @@
-package me.anemoi.rendertools.mixin;
+package me.anemoi.rendertools.mixin.item;
 
 import me.anemoi.rendertools.config.modules.AnimationCreatorConfig;
 import me.anemoi.rendertools.config.modules.AnimationsConfig;

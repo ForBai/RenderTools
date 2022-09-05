@@ -7,9 +7,11 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Minecraft.class)
-public class TestMinecraftMixin {
+public class MinecraftMixin {
     @Inject(method = "startGame", at = @At(value = "HEAD"))
     private void onStartGame(CallbackInfo ci) {
-        System.out.println("hello world");
+        for (int i = 0; i < 20; i++) {
+            System.out.println("Hello, world!");
+        }
     }
 }

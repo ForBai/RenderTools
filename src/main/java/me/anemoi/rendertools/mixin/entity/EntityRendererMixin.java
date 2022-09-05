@@ -1,4 +1,4 @@
-package me.anemoi.rendertools.mixin;
+package me.anemoi.rendertools.mixin.entity;
 
 import me.anemoi.rendertools.RenderTools;
 import me.anemoi.rendertools.config.modules.CameraConfig;

@@ -1,4 +1,4 @@
-package me.anemoi.rendertools.mixin;
+package me.anemoi.rendertools.mixin.entity;
 
 import me.anemoi.rendertools.config.modules.HitAnimationConfig;
 import net.minecraft.client.Minecraft;
