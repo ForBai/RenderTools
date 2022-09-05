@@ -1,12 +1,24 @@
 package me.anemoi.rendertools.config;
 
+import cc.polyfrost.oneconfig.config.annotations.KeyBind;
 import cc.polyfrost.oneconfig.config.annotations.Page;
+import cc.polyfrost.oneconfig.config.core.OneKeyBind;
 import cc.polyfrost.oneconfig.config.data.PageLocation;
+import cc.polyfrost.oneconfig.libs.universal.UKeyboard;
+import cc.polyfrost.oneconfig.utils.TickDelay;
 import me.anemoi.rendertools.RenderTools;
 import cc.polyfrost.oneconfig.config.Config;
 import cc.polyfrost.oneconfig.config.data.Mod;
 import cc.polyfrost.oneconfig.config.data.ModType;
 import me.anemoi.rendertools.config.modules.*;
+import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
+import net.minecraft.init.Blocks;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import static me.anemoi.rendertools.RenderTools.mc;
 
 public class MainConfig extends Config {
 
@@ -25,9 +37,26 @@ public class MainConfig extends Config {
     @Page(name = "Camera Helper", location = PageLocation.TOP)
     public static CameraConfig cameraHelper = new CameraConfig();
 
+    @Page(name = "Nick Hider", location = PageLocation.TOP)
+    public static NickHiderConfig nickHider = new NickHiderConfig();
+
+    @KeyBind(name = "Create Ghost Block's", category = "Other")
+    public static OneKeyBind createGhostBlocks = new OneKeyBind(UKeyboard.KEY_NONE);
+
     public MainConfig() {
         super(new Mod(RenderTools.NAME, ModType.UTIL_QOL), RenderTools.MODID + ".json");
         initialize();
+        registerKeyBind(createGhostBlocks,() ->  {
+            if (mc.objectMouseOver.getBlockPos() == null) return;
+            Block block = (Minecraft.getMinecraft()).theWorld.getBlockState(mc.objectMouseOver.getBlockPos()).getBlock();
+            ArrayList<Block> interactables = new ArrayList<>(Arrays.asList(Blocks.acacia_door, Blocks.anvil, Blocks.beacon, Blocks.bed, Blocks.birch_door, Blocks.brewing_stand, Blocks.command_block, Blocks.crafting_table, Blocks.chest, Blocks.dark_oak_door,
+                    Blocks.daylight_detector, Blocks.daylight_detector_inverted, Blocks.dispenser, Blocks.dropper, Blocks.enchanting_table, Blocks.ender_chest, Blocks.furnace, Blocks.hopper, Blocks.jungle_door, Blocks.lever,
+                    Blocks.noteblock, Blocks.powered_comparator, Blocks.unpowered_comparator, Blocks.powered_repeater, Blocks.unpowered_repeater, Blocks.standing_sign, Blocks.wall_sign, Blocks.trapdoor, Blocks.trapped_chest, Blocks.wooden_button,
+                    Blocks.stone_button, Blocks.oak_door, Blocks.skull));
+            if (!interactables.contains(block)) {
+                mc.theWorld.setBlockToAir(mc.objectMouseOver.getBlockPos());
+            }
+        });
     }
 }
 

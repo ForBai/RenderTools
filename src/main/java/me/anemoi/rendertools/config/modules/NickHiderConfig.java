@@ -3,7 +3,7 @@ package me.anemoi.rendertools.config.modules;
 import cc.polyfrost.oneconfig.config.annotations.Switch;
 import cc.polyfrost.oneconfig.config.annotations.Text;
 
-public class NickHider {
+public class NickHiderConfig {
     @Switch(name = "Toggled")
     public static boolean toggled = false;
 
