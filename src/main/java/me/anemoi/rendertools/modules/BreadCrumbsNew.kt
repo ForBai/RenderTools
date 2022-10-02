@@ -32,7 +32,7 @@ class BreadCrumbsNew {
 
     @SubscribeEvent
     fun onRender3D(event: RenderWorldLastEvent) {
-        if (mc.thePlayer == null || mc.theWorld == null) return
+        if (mc.thePlayer == null || mc.theWorld == null|| !BreadCrumbsConfig.toggled) return
         if (BreadCrumbsConfig.only3dPerson && mc.gameSettings.thirdPersonView == 0) return
 
         val fTime = BreadCrumbsConfig.fadeTime * 1000
@@ -141,7 +141,7 @@ class BreadCrumbsNew {
 
     @SubscribeEvent
     fun onUpdate(event: TickEvent) {
-        if (mc.thePlayer == null || mc.theWorld == null) return
+        if (mc.thePlayer == null || mc.theWorld == null || !BreadCrumbsConfig.toggled) return
         // clear points for entities not exist
         points.forEach { (id, _) ->
             if(mc.theWorld.getEntityByID(id) == null) {

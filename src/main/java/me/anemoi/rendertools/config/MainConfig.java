@@ -38,6 +38,9 @@ public class MainConfig extends Config {
     @Page(name = "Bread Crumbs",location = PageLocation.BOTTOM)
     public static BreadCrumbsConfig breadCrumbs = new BreadCrumbsConfig();
 
+    @Page(name = "Giants",location = PageLocation.TOP)
+    public static GiantsConfig giants = new GiantsConfig();
+
     @KeyBind(name = "Create Ghost Block's", category = "Other")
     public static OneKeyBind createGhostBlocks = new OneKeyBind(UKeyboard.KEY_NONE);
 

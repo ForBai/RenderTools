@@ -23,6 +23,7 @@ public abstract class NickHider {
 
     @Inject(method= "renderStringAtPos", at=@At(value="HEAD"), cancellable=true)
     private void renderString(String text, boolean shadow, CallbackInfo ci) {
+        System.out.println("NickHider");
         if (NickHiderConfig.toggled && text.contains(RenderTools.mc.getSession().getUsername())) {
             ci.cancel();
             this.renderStringAtPos(text.replaceAll(RenderTools.mc.getSession().getUsername(), NickHiderConfig.name), shadow);
