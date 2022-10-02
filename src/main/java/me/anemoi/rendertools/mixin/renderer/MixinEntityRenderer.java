@@ -36,19 +36,16 @@ public abstract class MixinEntityRenderer {
 
     @Redirect(method="orientCamera", at=@At(value="FIELD", target="Lnet/minecraft/client/renderer/EntityRenderer;thirdPersonDistanceTemp:F"))
     public float thirdPersonDistanceTemp(EntityRenderer instance) {
-        System.out.println("Camera distance temp");
         return CameraConfig.toggled ? (float)CameraConfig.cameraDistance : this.thirdPersonDistanceTemp;
     }
 
     @Redirect(method="orientCamera", at=@At(value="FIELD", target="Lnet/minecraft/client/renderer/EntityRenderer;thirdPersonDistance:F"))
     public float thirdPersonDistance(EntityRenderer instance) {
-        System.out.println("Camera distance");
         return CameraConfig.toggled ? (float)CameraConfig.cameraDistance : this.thirdPersonDistance;
     }
 
     @Redirect(method="orientCamera", at=@At(value="INVOKE", target="Lnet/minecraft/util/Vec3;distanceTo(Lnet/minecraft/util/Vec3;)D"))
     public double onCamera(Vec3 instance, Vec3 vec) {
-        System.out.println("Camera noclip");
         return CameraConfig.toggled && CameraConfig.noClip ? CameraConfig.cameraDistance : instance.distanceTo(vec);
     }
 
