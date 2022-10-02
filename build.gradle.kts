@@ -65,8 +65,8 @@ repositories {
 
 dependencies {
     modCompileOnly("cc.polyfrost:oneconfig-$platform:0.1.0-alpha+")
-    compileOnly("org.spongepowered:mixin:0.7.11-SNAPSHOT")
     shade("cc.polyfrost:oneconfig-wrapper-launchwrapper:1.0.0-alpha+")
+    compileOnly("org.spongepowered:mixin:0.7.11-SNAPSHOT")
 
     //add kotlin dependencies here
 

@@ -2,15 +2,16 @@
   "compatibilityLevel": "JAVA_8",
   "minVersion": "0.7",
   "package": "me.anemoi.rendertools.mixin",
-  "refmap": "mixins.oneconfig.refmap.json",
+  "refmap": "mixins.rendertools.refmap.json",
   "verbose": true,
   "client": [
     "MinecraftMixin",
+    "TestMixin",
     "entity.MixinEntityLivingBase",
     "entity.MixinEntityPlayerSP",
-    "renderer.MixinEntityRenderer",
     "entity.MixinRenderPlayer",
     "entity.NickHider",
-    "item.ItemRendererMixin"
+    "item.ItemRendererMixin",
+    "renderer.MixinEntityRenderer"
   ]
 }

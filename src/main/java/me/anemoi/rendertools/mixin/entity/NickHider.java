@@ -13,17 +13,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(FontRenderer.class)
 public abstract class NickHider {
     @Shadow
-    protected abstract void renderStringAtPos(String var1, boolean var2);
+    protected abstract void renderStringAtPos(String text, boolean shadow);
 
     @Shadow
-    public abstract int getStringWidth(String var1);
+    public abstract int getStringWidth(String text);
 
     @Shadow
-    public abstract int getCharWidth(char var1);
+    public abstract int getCharWidth(char character);
 
     @Inject(method= "renderStringAtPos", at=@At(value="HEAD"), cancellable=true)
-    private void renderString(String text, boolean shadow, CallbackInfo ci) {
-        System.out.println("NickHider");
+    private void renderStringAtPos(String text, boolean shadow, CallbackInfo ci) {
         if (NickHiderConfig.toggled && text.contains(RenderTools.mc.getSession().getUsername())) {
             ci.cancel();
             this.renderStringAtPos(text.replaceAll(RenderTools.mc.getSession().getUsername(), NickHiderConfig.name), shadow);

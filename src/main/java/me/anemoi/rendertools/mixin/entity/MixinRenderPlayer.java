@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(RenderPlayer.class)
 public abstract class MixinRenderPlayer {
-    @Inject(method={"preRenderCallback(Lnet/minecraft/client/entity/AbstractClientPlayer;F)V"}, at={@At(value="HEAD")})
+    @Inject(method="preRenderCallback(Lnet/minecraft/client/entity/AbstractClientPlayer;F)V", at={@At(value="HEAD")})
     public void onPreRenderCallback(AbstractClientPlayer entitylivingbaseIn, float partialTickTime, CallbackInfo ci) {
         if (GiantsConfig.toggled) {
             GlStateManager.scale(GiantsConfig.size, (double)GiantsConfig.size, GiantsConfig.size);
