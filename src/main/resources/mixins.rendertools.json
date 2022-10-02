@@ -5,10 +5,11 @@
   "refmap": "mixins.oneconfig.refmap.json",
   "verbose": true,
   "client": [
+    "MinecraftMixin",
     "entity.EntityRendererMixin",
-    "item.ItemRendererMixin",
-    "entity.NickHider",
     "entity.MixinEntityLivingBase",
-    "MinecraftMixin"
+    "entity.MixinRenderPlayer",
+    "entity.NickHider",
+    "item.ItemRendererMixin"
   ]
 }

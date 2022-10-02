@@ -2,6 +2,7 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import gg.essential.gradle.util.noServerRunConfigs
 
 plugins {
+    kotlin("jvm")
     id("gg.essential.multi-version")
     id("gg.essential.defaults.repo")
     id("gg.essential.defaults.java")
@@ -28,7 +29,7 @@ blossom {
 }
 
 version = mod_version
-group = "cc.polyfrost"
+group = "me.anemoi"
 base {
     archivesName.set("$mod_name ($platform)")
 }
@@ -66,6 +67,9 @@ dependencies {
     modCompileOnly("cc.polyfrost:oneconfig-$platform:0.1.0-alpha+")
     compileOnly("org.spongepowered:mixin:0.7.11-SNAPSHOT")
     shade("cc.polyfrost:oneconfig-wrapper-launchwrapper:1.0.0-alpha+")
+
+    //add kotlin dependencies here
+
 }
 
 tasks.processResources {

@@ -15,13 +15,12 @@ public class CameraConfig {
     @Switch(name = "No hurt cam")
     public static boolean noHurtCam = false;
 
+    @Switch(name = "No Clip")
+    public static boolean noClip = false;
+
     @Info(
             text = "Warning: No Clip could cause to get you banned on some servers.",
             type = InfoType.WARNING
     )
     public static boolean ignored;
-
-
-    @Switch(name = "No Clip")
-    public static boolean noClip = false;
 }
