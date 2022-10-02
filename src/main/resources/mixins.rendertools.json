@@ -6,7 +6,6 @@
   "verbose": true,
   "client": [
     "MinecraftMixin",
-    "TestMixin",
     "entity.MixinEntityLivingBase",
     "entity.MixinEntityPlayerSP",
     "entity.MixinRenderPlayer",
