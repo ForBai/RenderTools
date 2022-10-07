@@ -18,4 +18,5 @@ public abstract class MixinRenderPlayer {
             GlStateManager.scale(GiantsConfig.size, (double)GiantsConfig.size, GiantsConfig.size);
         }
     }
+
 }

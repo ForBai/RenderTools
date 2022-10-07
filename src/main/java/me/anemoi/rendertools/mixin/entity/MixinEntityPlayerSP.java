@@ -14,4 +14,5 @@ public class MixinEntityPlayerSP {
         //this is a feature from a newer version of minecraft so it cant get you banned
         cir.setReturnValue(MainConfig.pushOutOfBlocks);
     }
+
 }

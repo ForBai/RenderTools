@@ -49,4 +49,5 @@ public abstract class MixinEntityRenderer {
         return CameraConfig.toggled && CameraConfig.noClip ? CameraConfig.cameraDistance : instance.distanceTo(vec);
     }
 
+
 }

@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(EntityLivingBase.class)
-public abstract class MixinEntityLivingBase {
+public abstract class MixinEntityLivingBase extends EntitiyMixin{
 
     @Shadow
     public abstract PotionEffect getActivePotionEffect(Potion potionIn);
@@ -32,4 +32,6 @@ public abstract class MixinEntityLivingBase {
 
         return speed;
     }
+
+
 }

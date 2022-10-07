@@ -12,5 +12,9 @@
     "entity.NickHider",
     "item.ItemRendererMixin",
     "renderer.MixinEntityRenderer"
+  ],
+  "mixins": [
+    "entity.EntitiyMixin",
+    "entity.PlayerMixin"
   ]
 }
