@@ -5,7 +5,6 @@ import me.anemoi.rendertools.config.modules.BreadCrumbsConfig
 import me.anemoi.rendertools.utils.RenderUtils
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraftforge.client.event.RenderWorldEvent
 import net.minecraftforge.client.event.RenderWorldLastEvent
 import net.minecraftforge.event.world.WorldEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
@@ -32,7 +31,7 @@ class BreadCrumbsNew {
 
     @SubscribeEvent
     fun onRender3D(event: RenderWorldLastEvent) {
-        if (mc.thePlayer == null || mc.theWorld == null|| !BreadCrumbsConfig.toggled) return
+        if (mc.thePlayer == null || mc.theWorld == null || !BreadCrumbsConfig.toggled) return
         if (BreadCrumbsConfig.only3dPerson && mc.gameSettings.thirdPersonView == 0) return
 
         val fTime = BreadCrumbsConfig.fadeTime * 1000
@@ -52,7 +51,7 @@ class BreadCrumbsNew {
             var lastPosX = 114514.0
             var lastPosY = 114514.0
             var lastPosZ = 114514.0
-            when(BreadCrumbsConfig.mode) {
+            when (BreadCrumbsConfig.mode) {
                 0 -> {
                     GL11.glLineWidth(BreadCrumbsConfig.width.toFloat())
                     GL11.glEnable(GL11.GL_LINE_SMOOTH)
@@ -70,19 +69,25 @@ class BreadCrumbsNew {
                         continue
                     }
                     pct
-                } else { 1f } * colorAlpha
+                } else {
+                    1f
+                } * colorAlpha
                 if (BreadCrumbsConfig.mode != 3) {
                     RenderUtils.glColor(point.color, alpha)
                 }
-                when(BreadCrumbsConfig.mode) {
+                when (BreadCrumbsConfig.mode) {
                     0 -> GL11.glVertex3d(point.x - renderPosX, point.y - renderPosY, point.z - renderPosZ)
                     1 -> {
-                        if(!(lastPosX==114514.0 && lastPosY==114514.0 && lastPosZ==114514.0)) {
+                        if (!(lastPosX == 114514.0 && lastPosY == 114514.0 && lastPosZ == 114514.0)) {
                             GL11.glBegin(GL11.GL_QUADS)
                             GL11.glVertex3d(point.x - renderPosX, point.y - renderPosY, point.z - renderPosZ)
                             GL11.glVertex3d(lastPosX, lastPosY, lastPosZ)
                             GL11.glVertex3d(lastPosX, lastPosY + mc.thePlayer.height, lastPosZ)
-                            GL11.glVertex3d(point.x - renderPosX, point.y - renderPosY + mc.thePlayer.height, point.z - renderPosZ)
+                            GL11.glVertex3d(
+                                point.x - renderPosX,
+                                point.y - renderPosY + mc.thePlayer.height,
+                                point.z - renderPosZ
+                            )
                             GL11.glEnd()
                         }
                         lastPosX = point.x - renderPosX
@@ -92,7 +97,11 @@ class BreadCrumbsNew {
                     2 -> {
                         GL11.glPushMatrix()
                         GL11.glTranslated(point.x - renderPosX, point.y - renderPosY, point.z - renderPosZ)
-                        GL11.glScalef(BreadCrumbsConfig.sphereScale, BreadCrumbsConfig.sphereScale, BreadCrumbsConfig.sphereScale)
+                        GL11.glScalef(
+                            BreadCrumbsConfig.sphereScale,
+                            BreadCrumbsConfig.sphereScale,
+                            BreadCrumbsConfig.sphereScale
+                        )
                         GL11.glCallList(sphereList)
                         GL11.glPopMatrix()
                     }
@@ -122,7 +131,7 @@ class BreadCrumbsNew {
                     }
                 }
             }
-            when(BreadCrumbsConfig.mode) {
+            when (BreadCrumbsConfig.mode) {
                 0 -> {
                     GL11.glEnd()
                     GL11.glDisable(GL11.GL_LINE_SMOOTH)
@@ -144,29 +153,42 @@ class BreadCrumbsNew {
         if (mc.thePlayer == null || mc.theWorld == null || !BreadCrumbsConfig.toggled) return
         // clear points for entities not exist
         points.forEach { (id, _) ->
-            if(mc.theWorld.getEntityByID(id) == null) {
+            if (mc.theWorld.getEntityByID(id) == null) {
                 points.remove(id)
             }
         }
         // add new points
-        if(mc.thePlayer.ticksExisted % BreadCrumbsConfig.precision != 0) {
+        if (mc.thePlayer.ticksExisted % BreadCrumbsConfig.precision != 0) {
             return // skip if not on tick
         }
-        if(BreadCrumbsConfig.drawOthers) {
+        if (BreadCrumbsConfig.drawOthers) {
             mc.theWorld.loadedEntityList.forEach {
-                if(it is EntityPlayer && it !== mc.thePlayer) {
+                if (it is EntityPlayer && it !== mc.thePlayer) {
                     updatePoints(it as EntityLivingBase)
                 }
             }
         }
-        if(BreadCrumbsConfig.drawOwn) {
+        if (BreadCrumbsConfig.drawOwn) {
             updatePoints(mc.thePlayer)
         }
     }
 
     private fun updatePoints(entity: EntityLivingBase) {
         (points[entity.entityId] ?: mutableListOf<BreadcrumbPoint>().also { points[entity.entityId] = it })
-            .add(BreadcrumbPoint(entity.posX, entity.entityBoundingBox.minY, entity.posZ, System.currentTimeMillis(), Color(BreadCrumbsConfig.color.red,BreadCrumbsConfig.color.green,BreadCrumbsConfig.color.blue,BreadCrumbsConfig.alpha).rgb))
+            .add(
+                BreadcrumbPoint(
+                    entity.posX,
+                    entity.entityBoundingBox.minY,
+                    entity.posZ,
+                    System.currentTimeMillis(),
+                    Color(
+                        BreadCrumbsConfig.color.red,
+                        BreadCrumbsConfig.color.green,
+                        BreadCrumbsConfig.color.blue,
+                        BreadCrumbsConfig.alpha
+                    ).rgb
+                )
+            )
     }
 
     @SubscribeEvent

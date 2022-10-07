@@ -84,7 +84,8 @@ public abstract class ItemRendererMixin {
                 //if (KillAura.target != null && !RenderTools.killAura.blockMode.getSelected().equals("None")) {
                 //    enumaction = EnumAction.BLOCK;
                 //}
-                block0 : switch (enumaction) {
+                block0:
+                switch (enumaction) {
                     case NONE: {
                         this.transformFirstPersonItem(f, 0.0f);
                         break;
@@ -112,14 +113,14 @@ public abstract class ItemRendererMixin {
                                 case 7: {
                                     this.transformFirstPersonItem(f, 0.0f);
                                     this.doBlockTransformations();
-                                    float var19 = MathHelper.sin((float)(MathHelper.sqrt_float((float)f1) * (float)Math.PI));
-                                    GlStateManager.translate((float)-0.05f, (float)0.6f, (float)0.3f);
-                                    GlStateManager.rotate((float)(-var19 * 70.0f / 2.0f), (float)-8.0f, (float)-0.0f, (float)9.0f);
-                                    GlStateManager.rotate((float)(-var19 * 70.0f), (float)1.5f, (float)-0.4f, (float)-0.0f);
+                                    float var19 = MathHelper.sin((float) (MathHelper.sqrt_float((float) f1) * (float) Math.PI));
+                                    GlStateManager.translate((float) -0.05f, (float) 0.6f, (float) 0.3f);
+                                    GlStateManager.rotate((float) (-var19 * 70.0f / 2.0f), (float) -8.0f, (float) -0.0f, (float) 9.0f);
+                                    GlStateManager.rotate((float) (-var19 * 70.0f), (float) 1.5f, (float) -0.4f, (float) -0.0f);
                                     break block0;
                                 }
                                 case 1: {
-                                    float f16 = MathHelper.sin((float)(MathHelper.sqrt_float((float)f1) * (float)Math.PI));
+                                    float f16 = MathHelper.sin((float) (MathHelper.sqrt_float((float) f1) * (float) Math.PI));
                                     this.transformFirstPersonItem(f / 2.0f - 0.18f, 0.0f);
                                     GL11.glRotatef(f16 * 60.0f / 2.0f, -f16 / 2.0f, -0.0f, -16.0f);
                                     GL11.glRotatef(-f16 * 30.0f, 1.0f, f16 / 2.0f, -1.0f);
@@ -137,7 +138,7 @@ public abstract class ItemRendererMixin {
                                     break block0;
                                 }
                                 case 5: {
-                                    GlStateManager.rotate((float)(System.currentTimeMillis() / 3L % 360L), (float)0.0f, (float)0.0f, (float)-0.1f);
+                                    GlStateManager.rotate((float) (System.currentTimeMillis() / 3L % 360L), (float) 0.0f, (float) 0.0f, (float) -0.1f);
                                     this.transformFirstPersonItem(f / 1.6f, 0.0f);
                                     this.doBlockTransformations();
                                 }
@@ -154,7 +155,7 @@ public abstract class ItemRendererMixin {
                     }
                 }
             } else {
-                if (!HitAnimationConfig.toggled)this.doItemUsedTransformations(f1);
+                if (!HitAnimationConfig.toggled) this.doItemUsedTransformations(f1);
                 this.transformFirstPersonItem(f, f1);
             }
             this.renderItem(abstractclientplayer, this.itemToRender, ItemCameraTransforms.TransformType.FIRST_PERSON);
@@ -171,19 +172,19 @@ public abstract class ItemRendererMixin {
      */
     @Overwrite
     private void transformFirstPersonItem(float equipProgress, float swingProgress) {
-        float size = (float)AnimationsConfig.size;
-        float x = (float)AnimationsConfig.x;
-        float y = (float)AnimationsConfig.y;
-        float z = (float)AnimationsConfig.z;
-        GlStateManager.translate((float)(0.56f * x), (float)(-0.52f * y), (float)(-0.71999997f * z));
-        GlStateManager.translate((float)0.0f, (float)(equipProgress * -0.6f), (float)0.0f);
-        GlStateManager.rotate((float)45.0f, (float)0.0f, (float)1.0f, (float)0.0f);
-        float f = MathHelper.sin((float)(swingProgress * swingProgress * (float)Math.PI));
-        float f1 = MathHelper.sin((float)(MathHelper.sqrt_float((float)swingProgress) * (float)Math.PI));
-        GlStateManager.rotate((float)(f * -20.0f), (float)0.0f, (float)1.0f, (float)0.0f);
-        GlStateManager.rotate((float)(f1 * -20.0f), (float)0.0f, (float)0.0f, (float)1.0f);
-        GlStateManager.rotate((float)(f1 * -80.0f), (float)1.0f, (float)0.0f, (float)0.0f);
-        GlStateManager.scale((float)(0.4f * size), (float)(0.4f * size), (float)(0.4f * size));
+        float size = (float) AnimationsConfig.size;
+        float x = (float) AnimationsConfig.x;
+        float y = (float) AnimationsConfig.y;
+        float z = (float) AnimationsConfig.z;
+        GlStateManager.translate((float) (0.56f * x), (float) (-0.52f * y), (float) (-0.71999997f * z));
+        GlStateManager.translate((float) 0.0f, (float) (equipProgress * -0.6f), (float) 0.0f);
+        GlStateManager.rotate((float) 45.0f, (float) 0.0f, (float) 1.0f, (float) 0.0f);
+        float f = MathHelper.sin((float) (swingProgress * swingProgress * (float) Math.PI));
+        float f1 = MathHelper.sin((float) (MathHelper.sqrt_float((float) swingProgress) * (float) Math.PI));
+        GlStateManager.rotate((float) (f * -20.0f), (float) 0.0f, (float) 1.0f, (float) 0.0f);
+        GlStateManager.rotate((float) (f1 * -20.0f), (float) 0.0f, (float) 0.0f, (float) 1.0f);
+        GlStateManager.rotate((float) (f1 * -80.0f), (float) 1.0f, (float) 0.0f, (float) 0.0f);
+        GlStateManager.scale((float) (0.4f * size), (float) (0.4f * size), (float) (0.4f * size));
     }
 
     /**
@@ -205,18 +206,18 @@ public abstract class ItemRendererMixin {
         float rotation2z = 0.0f;
         switch (AnimationsConfig.mode) {
             case 6: {
-                angle1 = (float)AnimationCreatorConfig.angle1;
-                angle2 = (float)AnimationCreatorConfig.angle2;
-                angle3 = (float)AnimationCreatorConfig.angle3;
-                translateX = (float)AnimationCreatorConfig.translateX;
-                translateY = (float)AnimationCreatorConfig.translateY;
-                translateZ = (float)AnimationCreatorConfig.translateZ;
-                rotation1x = (float)AnimationCreatorConfig.rotation1x;
-                rotation1y = (float)AnimationCreatorConfig.rotation1y;
-                rotation1z = (float)AnimationCreatorConfig.rotation1z;
-                rotation2x = (float)AnimationCreatorConfig.rotation2x;
-                rotation2y = (float)AnimationCreatorConfig.rotation2y;
-                rotation2z = (float)AnimationCreatorConfig.rotation2z;
+                angle1 = (float) AnimationCreatorConfig.angle1;
+                angle2 = (float) AnimationCreatorConfig.angle2;
+                angle3 = (float) AnimationCreatorConfig.angle3;
+                translateX = (float) AnimationCreatorConfig.translateX;
+                translateY = (float) AnimationCreatorConfig.translateY;
+                translateZ = (float) AnimationCreatorConfig.translateZ;
+                rotation1x = (float) AnimationCreatorConfig.rotation1x;
+                rotation1y = (float) AnimationCreatorConfig.rotation1y;
+                rotation1z = (float) AnimationCreatorConfig.rotation1z;
+                rotation2x = (float) AnimationCreatorConfig.rotation2x;
+                rotation2y = (float) AnimationCreatorConfig.rotation2y;
+                rotation2z = (float) AnimationCreatorConfig.rotation2z;
                 break;
             }
             case 4: {
@@ -235,9 +236,9 @@ public abstract class ItemRendererMixin {
                 angle3 = 30.0f;
             }
         }
-        GlStateManager.translate((float)translateX, (float)translateY, (float)translateZ);
-        GlStateManager.rotate((float)angle1, (float)rotation1x, (float)rotation1y, (float)rotation1z);
-        GlStateManager.rotate((float)angle2, (float)rotation2x, (float)rotation2y, (float)rotation2z);
-        GlStateManager.rotate((float)angle3, (float)0.0f, (float)1.0f, (float)0.0f);
+        GlStateManager.translate((float) translateX, (float) translateY, (float) translateZ);
+        GlStateManager.rotate((float) angle1, (float) rotation1x, (float) rotation1y, (float) rotation1z);
+        GlStateManager.rotate((float) angle2, (float) rotation2x, (float) rotation2y, (float) rotation2z);
+        GlStateManager.rotate((float) angle3, (float) 0.0f, (float) 1.0f, (float) 0.0f);
     }
 }

@@ -172,7 +172,7 @@ public class BreadCrumbs {
         if (mc.thePlayer == null || mc.theWorld == null || !BreadCrumbsConfig.toggled) return;
         for (int i = 0; i < points.size(); i++) {
             int id = (int) points.keySet().toArray()[i];
-            if (mc.theWorld.getEntityByID(id) == null){
+            if (mc.theWorld.getEntityByID(id) == null) {
                 points.remove(id);
             }
         }

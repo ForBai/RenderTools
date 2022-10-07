@@ -22,7 +22,7 @@ public class ChinaHatConfig {
     @Slider(name = "Rotation", min = 0.0F, max = 5F)
     public static float rotation = 5.0F;
 
-    @Slider(name = "Angles" ,min = 4.0F, max = 90.0F)
+    @Slider(name = "Angles", min = 4.0F, max = 90.0F)
     public static float angles = 8.0F;
 
     @Switch(name = "Show in First Person")

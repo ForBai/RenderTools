@@ -21,7 +21,7 @@ public abstract class NickHider {
     @Shadow
     public abstract int getCharWidth(char character);
 
-    @Inject(method= "renderStringAtPos", at=@At(value="HEAD"), cancellable=true)
+    @Inject(method = "renderStringAtPos", at = @At(value = "HEAD"), cancellable = true)
     private void renderStringAtPos(String text, boolean shadow, CallbackInfo ci) {
         if (NickHiderConfig.toggled && text.contains(RenderTools.mc.getSession().getUsername())) {
             ci.cancel();
@@ -29,7 +29,7 @@ public abstract class NickHider {
         }
     }
 
-    @Inject(method= "getStringWidth", at=@At(value="RETURN"), cancellable=true)
+    @Inject(method = "getStringWidth", at = @At(value = "RETURN"), cancellable = true)
     private void getStringWidth(String text, CallbackInfoReturnable<Integer> cir) {
         if (text != null && NickHiderConfig.toggled && text.contains(RenderTools.mc.getSession().getUsername())) {
             cir.setReturnValue(this.getStringWidth(text.replaceAll(RenderTools.mc.getSession().getUsername(), NickHiderConfig.name)));

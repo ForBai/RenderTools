@@ -6,7 +6,6 @@ import me.anemoi.rendertools.config.MainConfig;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.init.Blocks;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.input.Keyboard;
 
 import java.util.ArrayList;
@@ -18,7 +17,7 @@ public class GhostBlocker {
 
     @Subscribe
     public void onTick(TickEvent event) {
-        for (Integer inte : MainConfig.createGhostBlocks.getKeyBinds()){
+        for (Integer inte : MainConfig.createGhostBlocks.getKeyBinds()) {
             if (!Keyboard.isKeyDown(inte)) return;
         }
         if (mc.objectMouseOver.getBlockPos() == null) return;

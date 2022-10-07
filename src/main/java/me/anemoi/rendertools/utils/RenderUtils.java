@@ -25,7 +25,7 @@ if there is any issue with this code please contact me on discord: Anemoi#7990
     }
 
     public static void glColor(final Color color, final int alpha) {
-        glColor(color, alpha/255F);
+        glColor(color, alpha / 255F);
     }
 
     public static void glColor(final Color color, final float alpha) {
