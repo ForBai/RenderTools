@@ -1,6 +1,7 @@
 package me.anemoi.rendertools.mixin;
 
 import net.minecraft.client.Minecraft;
+import org.lwjgl.Sys;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -15,4 +16,24 @@ public class MinecraftMixin {
             System.out.println("Hello, world!");
         }
     }
+
+    long lastFrame = getTime();
+
+    long getTime() {
+        return (Sys.getTime() * 1000) / Sys.getTimerResolution();
+    }
+
+    @Inject(method = "runGameLoop", at = @At(value = "HEAD"))
+    private void onRunGameLoop(CallbackInfo ci) {
+        //--Delta--//
+        /*
+        long currentTime = getTime();
+        int deltaTime = (int) (currentTime - lastFrame);
+        lastFrame = currentTime;
+        Delta.DELTATIME = deltaTime;
+        System.out.println(Delta.DELTATIME);
+         */
+        //--Delta--//
+    }
+
 }

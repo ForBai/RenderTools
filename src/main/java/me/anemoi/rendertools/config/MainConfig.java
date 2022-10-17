@@ -35,17 +35,26 @@ public class MainConfig extends Config {
     @Page(name = "Nick Hider", location = PageLocation.TOP)
     public static NickHiderConfig nickHider = new NickHiderConfig();
 
-    @Page(name = "Bread Crumbs", location = PageLocation.BOTTOM)
+    @Page(name = "Bread Crumbs", location = PageLocation.TOP)
     public static BreadCrumbsConfig breadCrumbs = new BreadCrumbsConfig();
 
     @Page(name = "Giants", location = PageLocation.TOP)
     public static GiantsConfig giants = new GiantsConfig();
+
+    @Page(name = "Test", location = PageLocation.TOP)
+    public static TestConfig test = new TestConfig();
+
+    @Page(name = "Trajectories",category = "Hidden", location = PageLocation.TOP)
+    public static TrajectoriesConfig trajectoriesConfig = new TrajectoriesConfig();
 
     @KeyBind(name = "Create Ghost Block's", category = "Other")
     public static OneKeyBind createGhostBlocks = new OneKeyBind(UKeyboard.KEY_NONE);
 
     @Switch(name = "Push Out Of Blocks", category = "Other")
     public static boolean pushOutOfBlocks = false;
+
+    @Switch(name = "???????", description = "Go dm Anemoi#7990", category = "Hidden")
+    public static boolean anemoi = false;
 
     public MainConfig() {
         super(new Mod(RenderTools.NAME, ModType.UTIL_QOL), RenderTools.MODID + ".json");

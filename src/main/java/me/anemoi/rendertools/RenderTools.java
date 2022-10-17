@@ -1,11 +1,10 @@
 package me.anemoi.rendertools;
 
+import cc.polyfrost.oneconfig.events.EventManager;
 import cc.polyfrost.oneconfig.utils.commands.CommandManager;
 import me.anemoi.rendertools.command.ExampleCommand;
 import me.anemoi.rendertools.config.MainConfig;
-import me.anemoi.rendertools.modules.BreadCrumbsNew;
-import me.anemoi.rendertools.modules.ChinaHat;
-import me.anemoi.rendertools.modules.GhostBlocker;
+import me.anemoi.rendertools.modules.*;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
 
@@ -28,5 +27,8 @@ public class RenderTools {
         MinecraftForge.EVENT_BUS.register(new GhostBlocker());
         //EventManager.INSTANCE.register(new Bre());
         MinecraftForge.EVENT_BUS.register(new BreadCrumbsNew());
+        MinecraftForge.EVENT_BUS.register(new TestModule());
+        EventManager.INSTANCE.register(new TestModule());
+        MinecraftForge.EVENT_BUS.register(new Trajectories());
     }
 }
