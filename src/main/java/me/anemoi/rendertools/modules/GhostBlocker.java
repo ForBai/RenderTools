@@ -2,6 +2,7 @@ package me.anemoi.rendertools.modules;
 
 import cc.polyfrost.oneconfig.events.event.TickEvent;
 import cc.polyfrost.oneconfig.libs.eventbus.Subscribe;
+import cc.polyfrost.oneconfig.libs.universal.UKeyboard;
 import me.anemoi.rendertools.config.MainConfig;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -17,7 +18,9 @@ public class GhostBlocker {
 
     @Subscribe
     public void onTick(TickEvent event) {
+        if (mc.thePlayer == null || mc.theWorld == null || !MainConfig.anemoi) return;
         for (Integer inte : MainConfig.createGhostBlocks.getKeyBinds()) {
+            if (inte == UKeyboard.KEY_NONE) return;
             if (!Keyboard.isKeyDown(inte)) return;
         }
         if (mc.objectMouseOver.getBlockPos() == null) return;
