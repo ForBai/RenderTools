@@ -1284,8 +1284,7 @@ public class RenderUtilsNew {
         GlStateManager.popMatrix();
     }
 
-    public static void drawBoundingBox(AxisAlignedBB bb, float width, float red, float green, float blue, float alpha)
-    {
+    public static void drawBoundingBox(AxisAlignedBB bb, float width, float red, float green, float blue, float alpha) {
         GlStateManager.pushMatrix();
         GlStateManager.enableBlend();
         GlStateManager.disableDepth();
@@ -1326,7 +1325,6 @@ public class RenderUtilsNew {
         GlStateManager.disableBlend();
         GlStateManager.popMatrix();
     }
-
 
 
 }

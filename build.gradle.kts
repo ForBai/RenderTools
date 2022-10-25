@@ -68,8 +68,8 @@ dependencies {
     modCompileOnly("cc.polyfrost:oneconfig-$platform:0.1.0-alpha+")
     shade("cc.polyfrost:oneconfig-wrapper-launchwrapper:1.0.0-alpha+")
     compileOnly("org.spongepowered:mixin:0.7.11-SNAPSHOT")
-    implementation("com.github.Wolfsurge:AnimationSystem:1.1")
     //add kotlin dependencies here
+    //compileOnly("com.github.Wolfsurge:AnimationSystem:1.1")
 
 }
 

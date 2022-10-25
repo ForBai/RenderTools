@@ -21,7 +21,7 @@ public class RenderTools {
     @net.minecraftforge.fml.common.Mod.EventHandler
     public void onFMLInitialization(net.minecraftforge.fml.common.event.FMLInitializationEvent event) {
         config = new MainConfig();
-        CommandManager.INSTANCE.registerCommand(ExampleCommand.class);
+        CommandManager.INSTANCE.registerCommand(new ExampleCommand());
 
         MinecraftForge.EVENT_BUS.register(new ChinaHat());
         MinecraftForge.EVENT_BUS.register(new GhostBlocker());
@@ -29,6 +29,7 @@ public class RenderTools {
         MinecraftForge.EVENT_BUS.register(new BreadCrumbsNew());
         MinecraftForge.EVENT_BUS.register(new TestModule());
         EventManager.INSTANCE.register(new TestModule());
+        EventManager.INSTANCE.register(new GhostBlocker());
         MinecraftForge.EVENT_BUS.register(new Trajectories());
     }
 }

@@ -19,13 +19,13 @@ public class TrajectoriesConfig {
     @Switch(name = "Render Others")
     public static boolean renderOther = false;
 
-    @Slider(name = "Width",min = 1,max = 20)
+    @Slider(name = "Width", min = 1, max = 20)
     public static float width = 1;
-/*
-    @Slider(name = "Inner Size",min = -5,max = 5)
-    public static float innerSize = 1;
-*/
-    @Slider(name = "Slices",min = 2,max = 50)
+    /*
+        @Slider(name = "Inner Size",min = -5,max = 5)
+        public static float innerSize = 1;
+    */
+    @Slider(name = "Slices", min = 2, max = 50)
     public static float slices = 3;
 
 }

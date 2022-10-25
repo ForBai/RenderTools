@@ -44,7 +44,7 @@ public class MainConfig extends Config {
     @Page(name = "Test", location = PageLocation.TOP)
     public static TestConfig test = new TestConfig();
 
-    @Page(name = "Trajectories",category = "Hidden", location = PageLocation.TOP)
+    @Page(name = "Trajectories", category = "Hidden", location = PageLocation.TOP)
     public static TrajectoriesConfig trajectoriesConfig = new TrajectoriesConfig();
 
     @KeyBind(name = "Create Ghost Block's", category = "Other")
