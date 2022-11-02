@@ -190,9 +190,10 @@ public class RenderBLockOverlay {
             TESSELLATOR.draw();
         }
     }
+
     public static void drawStairs(BlockPos blockPos, IBlockState blockState, AxisAlignedBB box, EnumFacing side, double playerX, double playerY, double playerZ, int overlayStartColor, int overlayEndColor, int outlineStartColor, int outlineEndColor, boolean overlay, boolean outline) {
-        EnumFacing blockFacing = (EnumFacing)((Object)blockState.getValue(BlockStairs.FACING));
-        BlockStairs.EnumHalf blockHalf = (BlockStairs.EnumHalf)((Object)blockState.getValue(BlockStairs.HALF));
+        EnumFacing blockFacing = (EnumFacing) ((Object) blockState.getValue(BlockStairs.FACING));
+        BlockStairs.EnumHalf blockHalf = (BlockStairs.EnumHalf) ((Object) blockState.getValue(BlockStairs.HALF));
         int blockX = blockPos.getX();
         int blockY = blockPos.getY();
         int blockZ = blockPos.getZ();
@@ -213,11 +214,11 @@ public class RenderBLockOverlay {
         }
         GL11.glPushMatrix();
         GL11.glTranslated(-playerX, -playerY, -playerZ);
-        GL11.glTranslated((double)blockX + 0.5, blockY, (double)blockZ + 0.5);
+        GL11.glTranslated((double) blockX + 0.5, blockY, (double) blockZ + 0.5);
         GL11.glRotated(angleY, 0.0, 1.0, 0.0);
         GL11.glTranslated(0.0, 0.5, 0.0);
         GL11.glRotated(angleX, 1.0, 0.0, 0.0);
-        GL11.glTranslated((double)(-blockX) - 0.5, (double)(-blockY) - 0.5, (double)(-blockZ) - 0.5);
+        GL11.glTranslated((double) (-blockX) - 0.5, (double) (-blockY) - 0.5, (double) (-blockZ) - 0.5);
         if (side == null) {
             drawStairsFull(box, new Color(overlayStartColor, true), new Color(overlayEndColor, true), new Color(outlineStartColor, true), new Color(outlineEndColor, true), overlay, outline);
         } else {

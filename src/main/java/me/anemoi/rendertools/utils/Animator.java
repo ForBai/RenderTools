@@ -10,7 +10,7 @@ public class Animator {
 
     public double getValue(double d, double d1, boolean increasing, boolean flag) {
         double value;
-        double time = (double)(System.currentTimeMillis() - this.startTime) / this.duration;
+        double time = (double) (System.currentTimeMillis() - this.startTime) / this.duration;
         time = flag ? 2.0 * time * time : (time -= 1.0) * time * time + 1.0;
         double d2 = value = increasing ? d + time * (d1 - d) : d1 + time * (d - d1);
         if (increasing && d1 < value) {
