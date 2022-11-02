@@ -1,5 +1,6 @@
 package me.anemoi.rendertools.mixin.renderer;
 
+import me.anemoi.rendertools.config.MainConfig;
 import me.anemoi.rendertools.config.modules.CameraConfig;
 import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.entity.EntityLivingBase;
@@ -44,7 +45,7 @@ public abstract class MixinEntityRenderer {
 
     @Redirect(method = "orientCamera", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/Vec3;distanceTo(Lnet/minecraft/util/Vec3;)D"))
     public double onCamera(Vec3 instance, Vec3 vec) {
-        return CameraConfig.toggled && CameraConfig.noClip ? CameraConfig.cameraDistance : instance.distanceTo(vec);
+        return CameraConfig.toggled && MainConfig.anemoi && CameraConfig.noClip ? CameraConfig.cameraDistance : instance.distanceTo(vec);
     }
 
 

@@ -20,9 +20,13 @@ public class AnimationsConfig {
     @Slider(name = "size", min = 0.01F, max = 3.0F)
     public static float size = 1.0F;
 
-    @Dropdown(name = "Mode", options = {"1.7", "chill", "push", "spin", "vertical spin", "helicopter", "custom", "long hit"})
+    @Dropdown(name = "Mode", options = {"1.7", "chill", "push", "spin", "vertical spin", "helicopter", "custom", "long hit", "old"})
     public static int mode = 0;
 
     @Switch(name = "Swing progress")
     public static boolean swingProgress = false;
+
+    @Switch(name = "Special")
+    public static boolean special = true;
+
 }

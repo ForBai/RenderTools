@@ -1,5 +1,6 @@
 package me.anemoi.rendertools.mixin.item;
 
+import me.anemoi.rendertools.RenderTools;
 import me.anemoi.rendertools.config.modules.AnimationCreatorConfig;
 import me.anemoi.rendertools.config.modules.AnimationsConfig;
 import me.anemoi.rendertools.config.modules.HitAnimationConfig;
@@ -12,6 +13,7 @@ import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.EnumAction;
+import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemMap;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
@@ -23,6 +25,11 @@ import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(ItemRenderer.class)
 public abstract class ItemRendererMixin {
+    public float prevSwingProgress;
+    public float swingProgress;
+    private int swingProgressInt;
+    private boolean isSwingInProgress;
+
     @Shadow
     private float prevEquippedProgress;
     @Shadow
@@ -68,7 +75,7 @@ public abstract class ItemRendererMixin {
     public void renderItemInFirstPerson(float partialTicks) {
         float f = 1.0f - (this.prevEquippedProgress + (this.equippedProgress - this.prevEquippedProgress) * partialTicks);
         EntityPlayerSP abstractclientplayer = this.mc.thePlayer;
-        float f1 = abstractclientplayer.getSwingProgress(partialTicks);
+        float swingProgress = RenderTools.animationHandler.getSwingProgress(partialTicks);
         float f2 = abstractclientplayer.prevRotationPitch + (abstractclientplayer.rotationPitch - abstractclientplayer.prevRotationPitch) * partialTicks;
         float f3 = abstractclientplayer.prevRotationYaw + (abstractclientplayer.rotationYaw - abstractclientplayer.prevRotationYaw) * partialTicks;
         this.rotateArroundXAndY(f2, f3);
@@ -76,14 +83,23 @@ public abstract class ItemRendererMixin {
         this.rotateWithPlayerRotations(abstractclientplayer, partialTicks);
         GlStateManager.enableRescaleNormal();
         GlStateManager.pushMatrix();
+        boolean blockHitOverride = false;
+        if (AnimationsConfig.special && abstractclientplayer.getItemInUseCount() <= 0 && this.mc.gameSettings.keyBindUseItem.isKeyDown()) {
+            boolean alwaysEdible;
+            boolean block = this.itemToRender.getItemUseAction() == EnumAction.BLOCK;
+            boolean consume = false;
+            if (this.itemToRender.getItem() instanceof ItemFood && abstractclientplayer.canEat(alwaysEdible = ((ItemFoodAccessor) ((Object) this.itemToRender.getItem())).getAlwaysEdible())) {
+                boolean bl = consume = this.itemToRender.getItemUseAction() == EnumAction.EAT || this.itemToRender.getItemUseAction() == EnumAction.DRINK;
+            }
+            if (block || consume) {
+                blockHitOverride = true;
+            }
+        }
         if (this.itemToRender != null) {
             if (this.itemToRender.getItem() instanceof ItemMap) {
-                this.renderItemMap(abstractclientplayer, f2, f, f1);
-            } else if (abstractclientplayer.getItemInUseCount() > 0) {
+                this.renderItemMap(abstractclientplayer, f2, f, swingProgress);
+            } else if ((abstractclientplayer.getItemInUseCount() > 0 || blockHitOverride) && this.itemToRender.getItemUseAction() != EnumAction.NONE && this.mc.thePlayer.isUsingItem()) {
                 EnumAction enumaction = this.itemToRender.getItemUseAction();
-                //if (KillAura.target != null && !RenderTools.killAura.blockMode.getSelected().equals("None")) {
-                //    enumaction = EnumAction.BLOCK;
-                //}
                 block0:
                 switch (enumaction) {
                     case NONE: {
@@ -93,34 +109,34 @@ public abstract class ItemRendererMixin {
                     case EAT:
                     case DRINK: {
                         this.performDrinking(abstractclientplayer, partialTicks);
-                        this.transformFirstPersonItem(f, 0.0f);
+                        this.transformFirstPersonItem(f, swingProgress);
                         break;
                     }
                     case BLOCK: {
                         if (AnimationsConfig.toggled) {
                             switch (AnimationsConfig.mode) {
                                 case 0: {
-                                    this.transformFirstPersonItem(f, f1);
+                                    this.transformFirstPersonItem(f, swingProgress);
                                     this.doBlockTransformations();
                                     break block0;
                                 }
                                 case 3:
                                 case 4: {
-                                    this.transformFirstPersonItem(f, AnimationsConfig.swingProgress ? f1 : 0.0f);
+                                    this.transformFirstPersonItem(f, AnimationsConfig.swingProgress ? swingProgress : 0.0f);
                                     this.doBlockTransformations();
                                     break block0;
                                 }
                                 case 7: {
                                     this.transformFirstPersonItem(f, 0.0f);
                                     this.doBlockTransformations();
-                                    float var19 = MathHelper.sin((float) (MathHelper.sqrt_float((float) f1) * (float) Math.PI));
+                                    float var19 = MathHelper.sin((float) (MathHelper.sqrt_float((float) swingProgress) * (float) Math.PI));
                                     GlStateManager.translate((float) -0.05f, (float) 0.6f, (float) 0.3f);
                                     GlStateManager.rotate((float) (-var19 * 70.0f / 2.0f), (float) -8.0f, (float) -0.0f, (float) 9.0f);
                                     GlStateManager.rotate((float) (-var19 * 70.0f), (float) 1.5f, (float) -0.4f, (float) -0.0f);
                                     break block0;
                                 }
                                 case 1: {
-                                    float f16 = MathHelper.sin((float) (MathHelper.sqrt_float((float) f1) * (float) Math.PI));
+                                    float f16 = MathHelper.sin((float) (MathHelper.sqrt_float((float) swingProgress) * (float) Math.PI));
                                     this.transformFirstPersonItem(f / 2.0f - 0.18f, 0.0f);
                                     GL11.glRotatef(f16 * 60.0f / 2.0f, -f16 / 2.0f, -0.0f, -16.0f);
                                     GL11.glRotatef(-f16 * 30.0f, 1.0f, f16 / 2.0f, -1.0f);
@@ -128,12 +144,17 @@ public abstract class ItemRendererMixin {
                                     break block0;
                                 }
                                 case 2: {
-                                    this.transformFirstPersonItem(f, -f1);
+                                    this.transformFirstPersonItem(f, -swingProgress);
                                     this.doBlockTransformations();
                                     break block0;
                                 }
                                 case 6: {
-                                    this.transformFirstPersonItem(AnimationCreatorConfig.blockProgress ? f : 0.0f, AnimationCreatorConfig.swingProgress ? f1 : 0.0f);
+                                    this.transformFirstPersonItem(AnimationCreatorConfig.blockProgress ? f : 0.0f, AnimationCreatorConfig.swingProgress ? swingProgress : 0.0f);
+                                    this.doBlockTransformations();
+                                    break block0;
+                                }
+                                case 8: {
+                                    this.doSwordBlockAnimation();
                                     this.doBlockTransformations();
                                     break block0;
                                 }
@@ -155,17 +176,18 @@ public abstract class ItemRendererMixin {
                     }
                 }
             } else {
-                if (!HitAnimationConfig.toggled) this.doItemUsedTransformations(f1);
-                this.transformFirstPersonItem(f, f1);
+                if (!HitAnimationConfig.toggled) this.doItemUsedTransformations(swingProgress);
+                this.transformFirstPersonItem(f, swingProgress);
             }
             this.renderItem(abstractclientplayer, this.itemToRender, ItemCameraTransforms.TransformType.FIRST_PERSON);
         } else if (!abstractclientplayer.isInvisible()) {
-            this.renderPlayerArm(abstractclientplayer, f, f1);
+            this.renderPlayerArm(abstractclientplayer, f, swingProgress);
         }
         GlStateManager.popMatrix();
         GlStateManager.disableRescaleNormal();
         RenderHelper.disableStandardItemLighting();
     }
+
 
     /**
      * @author a
@@ -241,4 +263,13 @@ public abstract class ItemRendererMixin {
         GlStateManager.rotate((float) angle2, (float) rotation2x, (float) rotation2y, (float) rotation2z);
         GlStateManager.rotate((float) angle3, (float) 0.0f, (float) 1.0f, (float) 0.0f);
     }
+
+    private void doSwordBlockAnimation() {
+        GlStateManager.translate((float) -0.5f, (float) 0.2f, (float) 0.0f);
+        GlStateManager.rotate((float) 30.0f, (float) 0.0f, (float) 1.0f, (float) 0.0f);
+        GlStateManager.rotate((float) -80.0f, (float) 1.0f, (float) 0.0f, (float) 0.0f);
+        GlStateManager.rotate((float) 60.0f, (float) 0.0f, (float) 1.0f, (float) 0.0f);
+    }
+
+
 }

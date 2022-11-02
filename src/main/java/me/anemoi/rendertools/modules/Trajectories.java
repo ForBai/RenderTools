@@ -1,5 +1,6 @@
 package me.anemoi.rendertools.modules;
 
+import me.anemoi.rendertools.config.MainConfig;
 import me.anemoi.rendertools.config.modules.TrajectoriesConfig;
 import me.anemoi.rendertools.utils.MathUtil;
 import me.anemoi.rendertools.utils.RenderUtilsNew;
@@ -40,7 +41,7 @@ public class Trajectories {
 
     @SubscribeEvent
     public void onRenderWorld(RenderWorldLastEvent renderEvent) {
-        if (mc.thePlayer == null || mc.theWorld == null || !TrajectoriesConfig.toggled) return;
+        if (mc.thePlayer == null || mc.theWorld == null || !TrajectoriesConfig.toggled || !MainConfig.anemoi) return;
         Color color = TrajectoriesConfig.color.toJavaColor();
 
         ThrowableType throwingType = this.getTypeFromCurrentItem(mc.thePlayer);

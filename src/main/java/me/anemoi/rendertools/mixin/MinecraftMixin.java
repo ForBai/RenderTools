@@ -12,9 +12,9 @@ public class MinecraftMixin {
 
     @Inject(method = "startGame", at = @At(value = "HEAD"))
     private void onStartGame(CallbackInfo ci) {
-        for (int i = 0; i < 20; i++) {
-            System.out.println("Hello, world!");
-        }
+        //for (int i = 0; i < 20; i++) {
+        System.out.println("Hello, world!");
+        //}
     }
 
     long lastFrame = getTime();

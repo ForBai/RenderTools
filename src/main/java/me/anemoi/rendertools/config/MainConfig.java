@@ -47,6 +47,9 @@ public class MainConfig extends Config {
     @Page(name = "Trajectories", category = "Hidden", location = PageLocation.TOP)
     public static TrajectoriesConfig trajectoriesConfig = new TrajectoriesConfig();
 
+    @Page(name = "Block Overlay", location = PageLocation.TOP)
+    public static BlockOverlayConfig blockOverlay = new BlockOverlayConfig();
+
     @KeyBind(name = "Create Ghost Block's", category = "Other")
     public static OneKeyBind createGhostBlocks = new OneKeyBind(UKeyboard.KEY_NONE);
 
@@ -59,6 +62,10 @@ public class MainConfig extends Config {
     public MainConfig() {
         super(new Mod(RenderTools.NAME, ModType.UTIL_QOL), RenderTools.MODID + ".json");
         initialize();
+        addDependency("pushOutOfBlocks", () -> anemoi);
+        addDependency("trajectoriesConfig", () -> anemoi);
+        addDependency("noClip", () -> anemoi);
+        addDependency("createGhostBlocks", () -> anemoi);
     }
 }
 

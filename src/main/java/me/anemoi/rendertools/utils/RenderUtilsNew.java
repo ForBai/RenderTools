@@ -8,6 +8,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -1324,6 +1325,219 @@ public class RenderUtilsNew {
         GlStateManager.enableTexture2D();
         GlStateManager.disableBlend();
         GlStateManager.popMatrix();
+    }
+
+    public static void drawFilledBoundingBox(AxisAlignedBB box, Color color, boolean outlined) {
+        RenderUtils.glColor(color);
+        drawFilledTopFace(box);
+        drawFilledBottomFace(box);
+        drawFilledNorthFace(box);
+        drawFilledEastFace(box);
+        drawFilledSouthFace(box);
+        drawFilledWestFace(box);
+        if (outlined) {
+            RenderUtils.glColor(color, 255);
+            RenderGlobal.drawSelectionBoundingBox((AxisAlignedBB) box);
+        }
+    }
+
+    public static void drawSide(AxisAlignedBB box, EnumFacing face, Color color, boolean filled, boolean outlined) {
+        if (filled) {
+            RenderUtils.glColor(color);
+        }
+        switch (face) {
+            case UP: {
+                if (filled) {
+                    drawFilledTopFace(box);
+                }
+                if (!outlined) break;
+                RenderUtils.glColor(color, filled ? 255 : color.getAlpha());
+                drawOutlinedTopFace(box);
+                break;
+            }
+            case DOWN: {
+                if (filled) {
+                    drawFilledBottomFace(box);
+                }
+                if (!outlined) break;
+                RenderUtils.glColor(color, filled ? 255 : color.getAlpha());
+                drawOutlinedBottomFace(box);
+                break;
+            }
+            case NORTH: {
+                if (filled) {
+                    drawFilledNorthFace(box);
+                }
+                if (!outlined) break;
+                RenderUtils.glColor(color, filled ? 255 : color.getAlpha());
+                drawOutlinedNorthFace(box);
+                break;
+            }
+            case EAST: {
+                if (filled) {
+                    drawFilledEastFace(box);
+                }
+                if (!outlined) break;
+                RenderUtils.glColor(color, filled ? 255 : color.getAlpha());
+                drawOutlinedEastFace(box);
+                break;
+            }
+            case SOUTH: {
+                if (filled) {
+                    drawFilledSouthFace(box);
+                }
+                if (!outlined) break;
+                RenderUtils.glColor(color, filled ? 255 : color.getAlpha());
+                drawOutlinedSouthFace(box);
+                break;
+            }
+            case WEST: {
+                if (filled) {
+                    drawFilledWestFace(box);
+                }
+                if (!outlined) break;
+                RenderUtils.glColor(color, filled ? 255 : color.getAlpha());
+                drawOutlinedWestFace(box);
+            }
+        }
+    }
+
+    private static void drawFilledTopFace(AxisAlignedBB box) {
+        Tessellator tessellator = Tessellator.getInstance();
+        WorldRenderer worldRenderer = tessellator.getWorldRenderer();
+        worldRenderer.begin(7, DefaultVertexFormats.POSITION);
+        worldRenderer.pos(box.minX, box.maxY, box.maxZ).endVertex();
+        worldRenderer.pos(box.maxX, box.maxY, box.maxZ).endVertex();
+        worldRenderer.pos(box.maxX, box.maxY, box.minZ).endVertex();
+        worldRenderer.pos(box.minX, box.maxY, box.minZ).endVertex();
+        tessellator.draw();
+    }
+
+    private static void drawOutlinedTopFace(AxisAlignedBB box) {
+        Tessellator tessellator = Tessellator.getInstance();
+        WorldRenderer worldRenderer = tessellator.getWorldRenderer();
+        worldRenderer.begin(3, DefaultVertexFormats.POSITION);
+        worldRenderer.pos(box.minX, box.maxY, box.maxZ).endVertex();
+        worldRenderer.pos(box.maxX, box.maxY, box.maxZ).endVertex();
+        worldRenderer.pos(box.maxX, box.maxY, box.minZ).endVertex();
+        worldRenderer.pos(box.minX, box.maxY, box.minZ).endVertex();
+        worldRenderer.pos(box.minX, box.maxY, box.maxZ).endVertex();
+        tessellator.draw();
+    }
+
+    private static void drawFilledBottomFace(AxisAlignedBB box) {
+        Tessellator tessellator = Tessellator.getInstance();
+        WorldRenderer worldRenderer = tessellator.getWorldRenderer();
+        worldRenderer.begin(7, DefaultVertexFormats.POSITION);
+        worldRenderer.pos(box.maxX, box.minY, box.maxZ).endVertex();
+        worldRenderer.pos(box.minX, box.minY, box.maxZ).endVertex();
+        worldRenderer.pos(box.minX, box.minY, box.minZ).endVertex();
+        worldRenderer.pos(box.maxX, box.minY, box.minZ).endVertex();
+        tessellator.draw();
+    }
+
+    private static void drawOutlinedBottomFace(AxisAlignedBB box) {
+        Tessellator tessellator = Tessellator.getInstance();
+        WorldRenderer worldRenderer = tessellator.getWorldRenderer();
+        worldRenderer.begin(3, DefaultVertexFormats.POSITION);
+        worldRenderer.pos(box.maxX, box.minY, box.maxZ).endVertex();
+        worldRenderer.pos(box.minX, box.minY, box.maxZ).endVertex();
+        worldRenderer.pos(box.minX, box.minY, box.minZ).endVertex();
+        worldRenderer.pos(box.maxX, box.minY, box.minZ).endVertex();
+        worldRenderer.pos(box.maxX, box.minY, box.maxZ).endVertex();
+        tessellator.draw();
+    }
+
+    private static void drawFilledNorthFace(AxisAlignedBB box) {
+        Tessellator tessellator = Tessellator.getInstance();
+        WorldRenderer worldRenderer = tessellator.getWorldRenderer();
+        worldRenderer.begin(7, DefaultVertexFormats.POSITION);
+        worldRenderer.pos(box.minX, box.maxY, box.minZ).endVertex();
+        worldRenderer.pos(box.maxX, box.maxY, box.minZ).endVertex();
+        worldRenderer.pos(box.maxX, box.minY, box.minZ).endVertex();
+        worldRenderer.pos(box.minX, box.minY, box.minZ).endVertex();
+        tessellator.draw();
+    }
+
+    private static void drawOutlinedNorthFace(AxisAlignedBB box) {
+        Tessellator tessellator = Tessellator.getInstance();
+        WorldRenderer worldRenderer = tessellator.getWorldRenderer();
+        worldRenderer.begin(3, DefaultVertexFormats.POSITION);
+        worldRenderer.pos(box.minX, box.maxY, box.minZ).endVertex();
+        worldRenderer.pos(box.maxX, box.maxY, box.minZ).endVertex();
+        worldRenderer.pos(box.maxX, box.minY, box.minZ).endVertex();
+        worldRenderer.pos(box.minX, box.minY, box.minZ).endVertex();
+        worldRenderer.pos(box.minX, box.maxY, box.minZ).endVertex();
+        tessellator.draw();
+    }
+
+    private static void drawFilledEastFace(AxisAlignedBB box) {
+        Tessellator tessellator = Tessellator.getInstance();
+        WorldRenderer worldRenderer = tessellator.getWorldRenderer();
+        worldRenderer.begin(7, DefaultVertexFormats.POSITION);
+        worldRenderer.pos(box.maxX, box.maxY, box.minZ).endVertex();
+        worldRenderer.pos(box.maxX, box.maxY, box.maxZ).endVertex();
+        worldRenderer.pos(box.maxX, box.minY, box.maxZ).endVertex();
+        worldRenderer.pos(box.maxX, box.minY, box.minZ).endVertex();
+        tessellator.draw();
+    }
+
+    private static void drawOutlinedEastFace(AxisAlignedBB box) {
+        Tessellator tessellator = Tessellator.getInstance();
+        WorldRenderer worldRenderer = tessellator.getWorldRenderer();
+        worldRenderer.begin(3, DefaultVertexFormats.POSITION);
+        worldRenderer.pos(box.maxX, box.maxY, box.minZ).endVertex();
+        worldRenderer.pos(box.maxX, box.maxY, box.maxZ).endVertex();
+        worldRenderer.pos(box.maxX, box.minY, box.maxZ).endVertex();
+        worldRenderer.pos(box.maxX, box.minY, box.minZ).endVertex();
+        worldRenderer.pos(box.maxX, box.maxY, box.minZ).endVertex();
+        tessellator.draw();
+    }
+
+    private static void drawFilledSouthFace(AxisAlignedBB box) {
+        Tessellator tessellator = Tessellator.getInstance();
+        WorldRenderer worldRenderer = tessellator.getWorldRenderer();
+        worldRenderer.begin(7, DefaultVertexFormats.POSITION);
+        worldRenderer.pos(box.maxX, box.maxY, box.maxZ).endVertex();
+        worldRenderer.pos(box.minX, box.maxY, box.maxZ).endVertex();
+        worldRenderer.pos(box.minX, box.minY, box.maxZ).endVertex();
+        worldRenderer.pos(box.maxX, box.minY, box.maxZ).endVertex();
+        tessellator.draw();
+    }
+
+    private static void drawOutlinedSouthFace(AxisAlignedBB box) {
+        Tessellator tessellator = Tessellator.getInstance();
+        WorldRenderer worldRenderer = tessellator.getWorldRenderer();
+        worldRenderer.begin(3, DefaultVertexFormats.POSITION);
+        worldRenderer.pos(box.maxX, box.maxY, box.maxZ).endVertex();
+        worldRenderer.pos(box.minX, box.maxY, box.maxZ).endVertex();
+        worldRenderer.pos(box.minX, box.minY, box.maxZ).endVertex();
+        worldRenderer.pos(box.maxX, box.minY, box.maxZ).endVertex();
+        worldRenderer.pos(box.maxX, box.maxY, box.maxZ).endVertex();
+        tessellator.draw();
+    }
+
+    private static void drawFilledWestFace(AxisAlignedBB box) {
+        Tessellator tessellator = Tessellator.getInstance();
+        WorldRenderer worldRenderer = tessellator.getWorldRenderer();
+        worldRenderer.begin(7, DefaultVertexFormats.POSITION);
+        worldRenderer.pos(box.minX, box.maxY, box.maxZ).endVertex();
+        worldRenderer.pos(box.minX, box.maxY, box.minZ).endVertex();
+        worldRenderer.pos(box.minX, box.minY, box.minZ).endVertex();
+        worldRenderer.pos(box.minX, box.minY, box.maxZ).endVertex();
+        tessellator.draw();
+    }
+
+    private static void drawOutlinedWestFace(AxisAlignedBB box) {
+        Tessellator tessellator = Tessellator.getInstance();
+        WorldRenderer worldRenderer = tessellator.getWorldRenderer();
+        worldRenderer.begin(3, DefaultVertexFormats.POSITION);
+        worldRenderer.pos(box.minX, box.maxY, box.maxZ).endVertex();
+        worldRenderer.pos(box.minX, box.maxY, box.minZ).endVertex();
+        worldRenderer.pos(box.minX, box.minY, box.minZ).endVertex();
+        worldRenderer.pos(box.minX, box.minY, box.maxZ).endVertex();
+        worldRenderer.pos(box.minX, box.maxY, box.maxZ).endVertex();
+        tessellator.draw();
     }
 
 

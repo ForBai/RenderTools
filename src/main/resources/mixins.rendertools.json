@@ -15,6 +15,7 @@
   ],
   "mixins": [
     "entity.EntitiyMixin",
-    "entity.PlayerMixin"
+    "entity.PlayerMixin",
+    "item.ItemFoodAccessor"
   ]
 }
