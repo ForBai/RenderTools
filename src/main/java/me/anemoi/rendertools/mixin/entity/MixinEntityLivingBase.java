@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
-@Mixin(EntityLivingBase.class)
+@Mixin(value = {EntityLivingBase.class}, priority = 20000)
 public abstract class MixinEntityLivingBase extends EntitiyMixin {
 
     @Shadow

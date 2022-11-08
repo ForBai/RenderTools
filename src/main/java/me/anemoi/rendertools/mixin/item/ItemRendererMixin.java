@@ -23,7 +23,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
-@Mixin(ItemRenderer.class)
+@Mixin(value = {ItemRenderer.class}, priority = 20000)
 public abstract class ItemRendererMixin {
     public float prevSwingProgress;
     public float swingProgress;
@@ -73,6 +73,9 @@ public abstract class ItemRendererMixin {
      */
     @Overwrite
     public void renderItemInFirstPerson(float partialTicks) {
+        //if (itemToRender == null) {
+        //    return;
+        //}
         float f = 1.0f - (this.prevEquippedProgress + (this.equippedProgress - this.prevEquippedProgress) * partialTicks);
         EntityPlayerSP abstractclientplayer = this.mc.thePlayer;
         float swingProgress = RenderTools.animationHandler.getSwingProgress(partialTicks);
@@ -83,19 +86,23 @@ public abstract class ItemRendererMixin {
         this.rotateWithPlayerRotations(abstractclientplayer, partialTicks);
         GlStateManager.enableRescaleNormal();
         GlStateManager.pushMatrix();
-        boolean blockHitOverride = false;
-        if (AnimationsConfig.special && abstractclientplayer.getItemInUseCount() <= 0 && this.mc.gameSettings.keyBindUseItem.isKeyDown()) {
-            boolean alwaysEdible;
-            boolean block = this.itemToRender.getItemUseAction() == EnumAction.BLOCK;
-            boolean consume = false;
-            if (this.itemToRender.getItem() instanceof ItemFood && abstractclientplayer.canEat(alwaysEdible = ((ItemFoodAccessor) ((Object) this.itemToRender.getItem())).getAlwaysEdible())) {
-                boolean bl = consume = this.itemToRender.getItemUseAction() == EnumAction.EAT || this.itemToRender.getItemUseAction() == EnumAction.DRINK;
-            }
-            if (block || consume) {
-                blockHitOverride = true;
-            }
-        }
         if (this.itemToRender != null) {
+            boolean blockHitOverride = false;
+            if (AnimationsConfig.special && abstractclientplayer.getItemInUseCount() <= 0 && mc.gameSettings.keyBindUseItem.isKeyDown()) {
+                boolean block = this.itemToRender.getItemUseAction() == EnumAction.BLOCK;
+                boolean consume = false;
+                if (this.itemToRender.getItem() instanceof ItemFood) {
+                    boolean alwaysEdible = ((ItemFoodAccessor) this.itemToRender.getItem()).getAlwaysEdible();
+                    if (mc.thePlayer.canEat(alwaysEdible)) {
+                        consume = this.itemToRender.getItemUseAction() == EnumAction.EAT || this.itemToRender.getItemUseAction() == EnumAction.DRINK;
+                    }
+                }
+
+                if (block || consume) {
+                    blockHitOverride = true;
+                }
+            }
+
             if (this.itemToRender.getItem() instanceof ItemMap) {
                 this.renderItemMap(abstractclientplayer, f2, f, swingProgress);
             } else if ((abstractclientplayer.getItemInUseCount() > 0 || blockHitOverride) && this.itemToRender.getItemUseAction() != EnumAction.NONE && this.mc.thePlayer.isUsingItem()) {

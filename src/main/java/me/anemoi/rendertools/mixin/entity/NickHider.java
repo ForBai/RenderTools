@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(FontRenderer.class)
+@Mixin(value = {FontRenderer.class}, priority = 20000)
 public abstract class NickHider {
     @Shadow
     protected abstract void renderStringAtPos(String text, boolean shadow);

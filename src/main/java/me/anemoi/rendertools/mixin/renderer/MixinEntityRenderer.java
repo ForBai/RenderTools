@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(EntityRenderer.class)
+@Mixin(value = {EntityRenderer.class}, priority = 20000)
 public abstract class MixinEntityRenderer {
     @Shadow
     private float thirdPersonDistanceTemp;
