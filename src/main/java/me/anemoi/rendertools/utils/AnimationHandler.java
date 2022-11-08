@@ -48,6 +48,7 @@ public class AnimationHandler {
         int max = getArmSwingAnimationEnd(player);
 
         if (AnimationsConfig.special && mc.gameSettings.keyBindAttack.isKeyDown() &&
+                mc.gameSettings.keyBindUseItem.isKeyDown() &&
                 mc.objectMouseOver != null &&
                 mc.objectMouseOver.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
             if (!this.isSwingInProgress || this.swingProgressInt >= max >> 1 || this.swingProgressInt < 0) {
@@ -59,7 +60,7 @@ public class AnimationHandler {
         if (this.isSwingInProgress) {
             ++this.swingProgressInt;
 
-            if (this.swingProgressInt >= max) {
+            if (this.swingProgressInt >= max || !mc.gameSettings.keyBindUseItem.isKeyDown()) {
                 this.swingProgressInt = 0;
                 this.isSwingInProgress = false;
             }
