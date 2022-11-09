@@ -6,7 +6,7 @@ import cc.polyfrost.oneconfig.utils.commands.CommandManager;
 import me.anemoi.rendertools.command.ExampleCommand;
 import me.anemoi.rendertools.config.MainConfig;
 import me.anemoi.rendertools.modules.*;
-import me.anemoi.rendertools.utils.AnimationHandler;
+import me.anemoi.rendertools.utils.SwingHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -24,7 +24,7 @@ public class RenderTools {
     @net.minecraftforge.fml.common.Mod.Instance(MODID)
     public static RenderTools INSTANCE;
     public static Minecraft mc = Minecraft.getMinecraft();
-    public static AnimationHandler animationHandler = new AnimationHandler();
+    public static SwingHelper swingHelper = new SwingHelper();
     public static boolean canUseHidden = false;
     public MainConfig config;
     private List<String> whiteListedUUIDs = new ArrayList<>();
@@ -37,7 +37,6 @@ public class RenderTools {
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(new ChinaHat());
         MinecraftForge.EVENT_BUS.register(new GhostBlocker());
-        MinecraftForge.EVENT_BUS.register(animationHandler);
         //EventManager.INSTANCE.register(new Bre());
         MinecraftForge.EVENT_BUS.register(new BreadCrumbsNew());
         MinecraftForge.EVENT_BUS.register(new TestModule());
@@ -60,6 +59,9 @@ public class RenderTools {
     public void onTick(TickEvent.ClientTickEvent event) {
         if (!canUseHidden) {
             MainConfig.anemoi = false;
+        }
+        if (event.phase == TickEvent.Phase.END && swingHelper != null) {
+            swingHelper.update();
         }
     }
 

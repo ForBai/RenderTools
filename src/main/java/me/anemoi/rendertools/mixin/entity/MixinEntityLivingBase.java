@@ -26,8 +26,7 @@ public abstract class MixinEntityLivingBase extends EntitiyMixin {
         int speed = this.isPotionActive(Potion.digSpeed) ? 6 - (1 + this.getActivePotionEffect(Potion.digSpeed).getAmplifier()) : (this.isPotionActive(Potion.digSlowdown) ? 6 + (1 + this.getActivePotionEffect(Potion.digSlowdown).getAmplifier()) * 2 : 6);
 
         if (this.equals(Minecraft.getMinecraft().thePlayer)) {
-            if (HitAnimationConfig.toggled)
-                speed = (int) (speed * HitAnimationConfig.swingSpeed);
+            speed = (int) (speed * HitAnimationConfig.swingSpeed);
         }
 
         return speed;
