@@ -10,7 +10,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 /*
 Author: Polyfrost Team
-Thanks to Polyfrost for this code
+Thanks to Polyfrost for parts this code
 https://github.com/Polyfrost/OverflowAnimationsV2/blob/master/LICENSE-GPL
  */
 
