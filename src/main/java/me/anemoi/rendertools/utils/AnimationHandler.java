@@ -8,6 +8,12 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
+/*
+Author: Polyfrost Team
+Thanks to Polyfrost for this code
+https://github.com/Polyfrost/OverflowAnimationsV2/blob/master/LICENSE-GPL
+ */
+
 public class AnimationHandler {
 
     private final Minecraft mc = Minecraft.getMinecraft();
@@ -25,7 +31,7 @@ public class AnimationHandler {
         }
 
         if (currentProgress < 0.0F) {
-            ++currentProgress;
+            currentProgress++;
         }
 
         return this.prevSwingProgress + currentProgress * partialTickTime;
@@ -48,7 +54,7 @@ public class AnimationHandler {
         int max = getArmSwingAnimationEnd(player);
 
         if (AnimationsConfig.special && mc.gameSettings.keyBindAttack.isKeyDown() &&
-                mc.gameSettings.keyBindUseItem.isKeyDown() &&
+                mc.thePlayer.isBlocking() &&
                 mc.objectMouseOver != null &&
                 mc.objectMouseOver.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
             if (!this.isSwingInProgress || this.swingProgressInt >= max >> 1 || this.swingProgressInt < 0) {
@@ -57,17 +63,18 @@ public class AnimationHandler {
             }
         }
 
-        if (this.isSwingInProgress) {
-            ++this.swingProgressInt;
+        if (!this.isSwingInProgress) this.swingProgressInt = 0;
 
-            if (this.swingProgressInt >= max || !mc.gameSettings.keyBindUseItem.isKeyDown()) {
+        if (this.isSwingInProgress) {
+            this.swingProgressInt++;
+
+            if (this.swingProgressInt >= max || !mc.thePlayer.isBlocking()) {
                 this.swingProgressInt = 0;
                 this.isSwingInProgress = false;
             }
-        } else {
-            this.swingProgressInt = 0;
         }
 
+        //update swing progress
         this.swingProgress = (float) this.swingProgressInt / (float) max;
     }
 
