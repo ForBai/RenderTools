@@ -1,7 +1,8 @@
 package me.anemoi.rendertools.utils;
 
 import cc.polyfrost.oneconfig.gui.OneConfigGui;
-import cc.polyfrost.oneconfig.renderer.AssetLoader;
+import cc.polyfrost.oneconfig.renderer.NanoVGHelper;
+import cc.polyfrost.oneconfig.renderer.asset.AssetHelper;
 import me.anemoi.rendertools.RenderTools;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -28,7 +29,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static cc.polyfrost.oneconfig.renderer.RenderManager.color;
 import static java.lang.Math.*;
 import static org.lwjgl.nanovg.NanoVG.*;
 import static org.lwjgl.opengl.GL11.*;
@@ -701,7 +701,7 @@ public class RenderUtilsNew {
             nvgLineTo(vg, entry.getKey(), entry.getValue());
         }
 
-        nvgStrokeColor(vg, color(vg, color));
+        nvgStrokeColor(vg, NanoVGHelper.INSTANCE.color(vg, color));
         nvgStrokeWidth(vg, width);
         nvgStroke(vg);
 
@@ -715,7 +715,7 @@ public class RenderUtilsNew {
 
         nvgLineTo(vg, endX, endY);
 
-        nvgStrokeColor(vg, color(vg, color));
+        nvgStrokeColor(vg, NanoVGHelper.INSTANCE.color(vg, color));
         nvgStrokeWidth(vg, width);
         nvgStroke(vg);
 
@@ -875,9 +875,9 @@ public class RenderUtilsNew {
     }
 
     public static void drawImage(long vg, String filePath, float x, float y, float width, float height, int color) {
-        if (AssetLoader.INSTANCE.loadImage(vg, filePath)) {
+        if (AssetHelper.INSTANCE.loadImage(vg, filePath)) {
             NVGPaint imagePaint = NVGPaint.calloc();
-            int image = AssetLoader.INSTANCE.getImage(filePath);
+            int image = AssetHelper.INSTANCE.getImage(filePath);
             nvgBeginPath(vg);
             nvgImagePattern(vg, x, y, width, height, 0, image, 1, imagePaint);
             nvgRGBA((byte) (color >> 16 & 0xFF), (byte) (color >> 8 & 0xFF), (byte) (color & 0xFF), (byte) (color >> 24 & 0xFF), imagePaint.innerColor());
@@ -889,9 +889,9 @@ public class RenderUtilsNew {
     }
 
     public static void drawImage(long vg, String filePath, float x, float y, float width, float height) {
-        if (AssetLoader.INSTANCE.loadImage(vg, filePath)) {
+        if (AssetHelper.INSTANCE.loadImage(vg, filePath)) {
             NVGPaint imagePaint = NVGPaint.calloc();
-            int image = AssetLoader.INSTANCE.getImage(filePath);
+            int image = AssetHelper.INSTANCE.getImage(filePath);
             nvgBeginPath(vg);
             nvgImagePattern(vg, x, y, width, height, 0, image, 1, imagePaint);
             nvgRect(vg, x, y, width, height);
@@ -908,9 +908,9 @@ public class RenderUtilsNew {
             w *= OneConfigGui.INSTANCE.getScaleFactor();
             h *= OneConfigGui.INSTANCE.getScaleFactor();
         }
-        if (AssetLoader.INSTANCE.loadSVG(vg, filePath, w, h)) {
+        if (AssetHelper.INSTANCE.loadSVG(vg, filePath, w, h)) {
             NVGPaint imagePaint = NVGPaint.calloc();
-            int image = AssetLoader.INSTANCE.getSVG(filePath, w, h);
+            int image = AssetHelper.INSTANCE.getSVG(filePath, w, h);
             nvgBeginPath(vg);
             nvgImagePattern(vg, x, y, width, height, 0, image, 1, imagePaint);
             nvgRect(vg, x, y, width, height);
@@ -927,9 +927,9 @@ public class RenderUtilsNew {
             w *= OneConfigGui.INSTANCE.getScaleFactor();
             h *= OneConfigGui.INSTANCE.getScaleFactor();
         }
-        if (AssetLoader.INSTANCE.loadSVG(vg, filePath, w, h)) {
+        if (AssetHelper.INSTANCE.loadSVG(vg, filePath, w, h)) {
             NVGPaint imagePaint = NVGPaint.calloc();
-            int image = AssetLoader.INSTANCE.getSVG(filePath, w, h);
+            int image = AssetHelper.INSTANCE.getSVG(filePath, w, h);
             nvgBeginPath(vg);
             nvgImagePattern(vg, x, y, width, height, 0, image, 1, imagePaint);
             nvgRGBA((byte) (color >> 16 & 0xFF), (byte) (color >> 8 & 0xFF), (byte) (color & 0xFF), (byte) (color >> 24 & 0xFF), imagePaint.innerColor());
@@ -944,7 +944,7 @@ public class RenderUtilsNew {
 
     /**
      * Draws a rounded gradient rectangle with the given parameters.
-     * Thanks PolyFrost for the original code.
+     * Thanks PolyFrost for parts the original code.
      *
      * @param vg     The NanoVG context.
      * @param x      The x position.
@@ -959,8 +959,8 @@ public class RenderUtilsNew {
         NVGPaint bg = NVGPaint.create();
         nvgBeginPath(vg);
         nvgRoundedRect(vg, x, y, width, height, radius);
-        NVGColor nvgColor = color(vg, color);
-        NVGColor nvgColor2 = color(vg, color2);
+        NVGColor nvgColor = NanoVGHelper.INSTANCE.color(vg, color);
+        NVGColor nvgColor2 = NanoVGHelper.INSTANCE.color(vg, color2);
         //nvgFillPaint(vg, nvgRadialGradient(vg, x+(width/2), y+(height/2), Math.min(width, height)/2, Math.max(width, height)/2, nvgColor, nvgColor2, bg));
         nvgFillPaint(vg, nvgBoxGradient(vg, x, y, width, height, Math.min(width, height) / 5, Math.max(width, height), nvgColor, nvgColor2, bg));
         nvgFill(vg);
@@ -975,10 +975,10 @@ public class RenderUtilsNew {
         //draw glow
         Color glow = new Color(glowColor);
         for (int i = (int) glowHardness; i > 0; i -= glowStrength) {
-            cc.polyfrost.oneconfig.renderer.RenderManager.drawHollowRoundRect(vg, x - glowHardness + i, y - glowHardness + i, width + (glowHardness * 2) - (i * 2), height + (glowHardness * 2) - (i * 2), new Color(glow.getRed(), glow.getGreen(), glow.getGreen(), i).getRGB(), radius, 5);
+            NanoVGHelper.INSTANCE.drawHollowRoundRect(vg, x - glowHardness + i, y - glowHardness + i, width + (glowHardness * 2) - (i * 2), height + (glowHardness * 2) - (i * 2), new Color(glow.getRed(), glow.getGreen(), glow.getGreen(), i).getRGB(), radius, 5);
         }
         //draw normal rectangle
-        cc.polyfrost.oneconfig.renderer.RenderManager.drawRoundedRect(vg, x, y, width, height, color, radius);
+        NanoVGHelper.INSTANCE.drawRoundedRect(vg, x, y, width, height, color, radius);
 
     }
 
@@ -992,7 +992,7 @@ public class RenderUtilsNew {
         //drawGradientRoundedRect(vg, x+width, y-glowRadius, glowRadius, height+(glowRadius*2),glowColor, new Color(glow.getRed(),glow.getGreen(),glow.getBlue(),(int) glowStrength).getRGB(), radius);
 
         //draw normal rectangle
-        cc.polyfrost.oneconfig.renderer.RenderManager.drawHollowRoundRect(vg, x, y, width, height, Color.blue.getRGB(), radius, 5);
+        NanoVGHelper.INSTANCE.drawHollowRoundRect(vg, x, y, width, height, Color.blue.getRGB(), radius, 5);
     }
 
     /**
