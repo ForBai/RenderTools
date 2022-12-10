@@ -34,6 +34,7 @@ class BreadCrumbsNew {
         if (mc.thePlayer == null || mc.theWorld == null || !BreadCrumbsConfig.toggled) return
         if (BreadCrumbsConfig.only3dPerson && mc.gameSettings.thirdPersonView == 0) return
 
+
         val fTime = BreadCrumbsConfig.fadeTime * 1000
         val fadeSec = System.currentTimeMillis() - fTime
         val colorAlpha = BreadCrumbsConfig.alpha / 255.0f
@@ -163,6 +164,7 @@ class BreadCrumbsNew {
         }
         if (BreadCrumbsConfig.drawOthers) {
             mc.theWorld.loadedEntityList.forEach {
+                if (it == null || it.isDead) return
                 if (it is EntityPlayer && it !== mc.thePlayer) {
                     updatePoints(it as EntityLivingBase)
                 }
@@ -174,6 +176,7 @@ class BreadCrumbsNew {
     }
 
     private fun updatePoints(entity: EntityLivingBase) {
+        if (BreadCrumbsConfig.only3dPerson && mc.gameSettings.thirdPersonView == 0) return
         (points[entity.entityId] ?: mutableListOf<BreadcrumbPoint>().also { points[entity.entityId] = it })
             .add(
                 BreadcrumbPoint(

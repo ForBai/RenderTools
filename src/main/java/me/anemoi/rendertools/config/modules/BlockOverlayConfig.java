@@ -25,6 +25,9 @@ public class BlockOverlayConfig {
     )
     public static int mode = 1;
 
+    @Switch(name = "Animate",description = "Animate the box going from on block to another. Try it yourself!")
+    public static boolean animate = false;
+
     @Switch(name = "Hide plants")
     public static boolean hidePlants = false;
 

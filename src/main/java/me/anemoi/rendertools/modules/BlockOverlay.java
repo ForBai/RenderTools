@@ -84,10 +84,21 @@ public class BlockOverlay {
         }
         if (mc.playerController.getCurrentGameType().isAdventure()) {
             if (BlockOverlayConfig.persistent || this.canRenderBlockOverlay()) {
-                this.renderBlockOverlay(block, entity, event.partialTicks);
+                //this.renderBlockOverlay(block, entity, event.partialTicks);
+                if (BlockOverlayConfig.animate) {
+                    this.renderBlockOverlayAnimation(block, entity, event.partialTicks);
+                } else {
+                    this.renderBlockOverlay(block, entity, event.partialTicks);
+                }
+
             }
         } else {
-            this.renderBlockOverlay(block, entity, event.partialTicks);
+            //this.renderBlockOverlay(block, entity, event.partialTicks);
+            if (BlockOverlayConfig.animate) {
+                this.renderBlockOverlayAnimation(block, entity, event.partialTicks);
+            } else {
+                this.renderBlockOverlay(block, entity, event.partialTicks);
+            }
         }
     }
 
@@ -104,6 +115,61 @@ public class BlockOverlay {
         int outlineEndColor = BlockOverlayConfig.gradient ? BlockOverlayConfig.colorSU.toJavaColor().getRGB() : outlineStartColor;
         MovingObjectPosition mouseOver = mc.objectMouseOver;
         BlockPos blockPos = mouseOver.getBlockPos();
+        AxisAlignedBB boundingBox = block.getSelectedBoundingBox(mc.theWorld, blockPos).expand(this.padding, this.padding, this.padding);
+        EnumFacing side = BlockOverlayConfig.mode == 2 ? mouseOver.sideHit : null;
+        GL11.glPushMatrix();
+        GlStateManager.disableAlpha();
+        GlStateManager.enableBlend();
+        //if (!BlockOverlay.instance.getShadersListener().isUsingShaders()) {
+        GlStateManager.tryBlendFuncSeparate((int) 770, (int) 771, (int) 1, (int) 0);
+        //}
+        GlStateManager.disableTexture2D();
+        GlStateManager.depthMask((boolean) false);
+        if (BlockOverlayConfig.ignoreDepth) {
+            GlStateManager.disableDepth();
+        }
+        GL11.glEnable(2848);
+        GL11.glHint(3154, 4354);
+        if (outline) {
+            GL11.glLineWidth((float) thickness);
+        }
+        GL11.glShadeModel(7425);
+        if (block instanceof BlockStairs) {
+            RenderBLockOverlay.drawStairs(blockPos, mc.theWorld.getBlockState(blockPos), boundingBox.expand(this.padding, this.padding, this.padding), side, entityX, entityY, entityZ, overlayStartColor, overlayEndColor, outlineStartColor, outlineEndColor, overlay, outline);
+        } else {
+            RenderBLockOverlay.drawBlock(boundingBox.offset(-entityX, -entityY, -entityZ), side, overlayStartColor, overlayEndColor, outlineStartColor, outlineEndColor, overlay, outline);
+        }
+        GL11.glLineWidth(2.0f);
+        GL11.glDisable(2848);
+        GlStateManager.enableDepth();
+        GlStateManager.depthMask((boolean) true);
+        GlStateManager.enableTexture2D();
+        GlStateManager.enableAlpha();
+        GL11.glPopMatrix();
+        this.renderBlockBreakOverlay(entity, partialTicks);
+    }
+
+    private void renderBlockOverlayAnimation(Block block, Entity entity, float partialTicks) {
+        double entityX = entity.lastTickPosX + (entity.posX - entity.lastTickPosX) * (double) partialTicks;
+        double entityY = entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * (double) partialTicks;
+        double entityZ = entity.lastTickPosZ + (entity.posZ - entity.lastTickPosZ) * (double) partialTicks;
+        double thickness = BlockOverlayConfig.lineWidth;
+        boolean overlay = BlockOverlayConfig.overlayColor;
+        boolean outline = BlockOverlayConfig.outlineColor;
+        int overlayStartColor = BlockOverlayConfig.colorFO.toJavaColor().getRGB();
+        int overlayEndColor = BlockOverlayConfig.gradient ? BlockOverlayConfig.colorSO.toJavaColor().getRGB() : overlayStartColor;
+        int outlineStartColor = BlockOverlayConfig.colorFU.toJavaColor().getRGB();
+        int outlineEndColor = BlockOverlayConfig.gradient ? BlockOverlayConfig.colorSU.toJavaColor().getRGB() : outlineStartColor;
+        //entityX = this.blockAnimator.getValue(entityX, Math.abs(entityX * 20.0), this.blockShrinking, false);
+        //entityY = this.blockAnimator.getValue(entityY, Math.abs(entityY * 20.0), this.blockShrinking, false);
+        //entityZ = this.blockAnimator.getValue(entityZ, Math.abs(entityZ * 20.0), this.blockShrinking, false);
+        MovingObjectPosition mouseOver = mc.objectMouseOver;
+        BlockPos blockPos = mouseOver.getBlockPos();
+        blockPos = new BlockPos(
+                this.blockAnimator.getValue(blockPos.getX(), Math.abs(blockPos.getX() * 20.0), this.blockShrinking, false),
+                this.blockAnimator.getValue(blockPos.getY(), Math.abs(blockPos.getY() * 20.0), this.blockShrinking, false),
+                this.blockAnimator.getValue(blockPos.getZ(), Math.abs(blockPos.getZ() * 20.0), this.blockShrinking, false)
+        );
         AxisAlignedBB boundingBox = block.getSelectedBoundingBox(mc.theWorld, blockPos).expand(this.padding, this.padding, this.padding);
         EnumFacing side = BlockOverlayConfig.mode == 2 ? mouseOver.sideHit : null;
         GL11.glPushMatrix();

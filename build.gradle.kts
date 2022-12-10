@@ -73,7 +73,6 @@ dependencies {
     }
     //add kotlin dependencies here
     //compileOnly("com.github.Wolfsurge:AnimationSystem:1.1")
-
 }
 
 tasks.processResources {

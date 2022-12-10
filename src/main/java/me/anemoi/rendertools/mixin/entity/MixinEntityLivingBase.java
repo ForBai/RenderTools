@@ -1,22 +1,37 @@
 package me.anemoi.rendertools.mixin.entity;
 
 import me.anemoi.rendertools.config.modules.HitAnimationConfig;
+import me.anemoi.rendertools.modules.JumpCircles;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(value = {EntityLivingBase.class}, priority = 20000)
-public abstract class MixinEntityLivingBase extends EntitiyMixin {
+public abstract class MixinEntityLivingBase extends Entity {
+
+    public MixinEntityLivingBase(World worldIn) {
+        super(worldIn);
+    }
 
     @Shadow
     public abstract PotionEffect getActivePotionEffect(Potion potionIn);
 
     @Shadow
     public abstract boolean isPotionActive(Potion potionIn);
+
+    @Inject(method = "jump", at = @At("HEAD"))
+    private void onJump(CallbackInfo ci) {
+        JumpCircles.instance.handleEntityJump(this);
+    }
 
     /**
      * @author Liuli

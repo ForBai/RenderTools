@@ -194,9 +194,9 @@ public class RenderBLockOverlay {
     public static void drawStairs(BlockPos blockPos, IBlockState blockState, AxisAlignedBB box, EnumFacing side, double playerX, double playerY, double playerZ, int overlayStartColor, int overlayEndColor, int outlineStartColor, int outlineEndColor, boolean overlay, boolean outline) {
         EnumFacing blockFacing = (EnumFacing) ((Object) blockState.getValue(BlockStairs.FACING));
         BlockStairs.EnumHalf blockHalf = (BlockStairs.EnumHalf) ((Object) blockState.getValue(BlockStairs.HALF));
-        int blockX = blockPos.getX();
-        int blockY = blockPos.getY();
-        int blockZ = blockPos.getZ();
+        double blockX = blockPos.getX();
+        double blockY = blockPos.getY();
+        double blockZ = blockPos.getZ();
         int angleX = blockHalf == BlockStairs.EnumHalf.TOP ? 270 : 0;
         int angleY = 0;
         switch (blockFacing) {

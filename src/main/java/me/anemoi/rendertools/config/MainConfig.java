@@ -50,6 +50,10 @@ public class MainConfig extends Config {
     @Page(name = "Block Overlay", location = PageLocation.TOP)
     public static BlockOverlayConfig blockOverlay = new BlockOverlayConfig();
 
+    @Page(name = "Jump Circles", description = "Coming soon(Very WIP)", location = PageLocation.TOP)
+    public static JumpCircleConfig jumpCircleConfig = new JumpCircleConfig();
+
+    //other
     @KeyBind(name = "Create Ghost Block's", category = "Other")
     public static OneKeyBind createGhostBlocks = new OneKeyBind(UKeyboard.KEY_NONE);
 

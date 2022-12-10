@@ -1,5 +1,6 @@
 package me.anemoi.rendertools;
 
+import cc.polyfrost.oneconfig.config.core.OneKeyBind;
 import cc.polyfrost.oneconfig.events.EventManager;
 import cc.polyfrost.oneconfig.utils.NetworkUtils;
 import cc.polyfrost.oneconfig.utils.commands.CommandManager;
@@ -28,6 +29,7 @@ public class RenderTools {
     public static boolean canUseHidden = false;
     public MainConfig config;
     private List<String> whiteListedUUIDs = new ArrayList<>();
+    public static boolean isDev = true; //if this is true in a release i am dumb
 
     @net.minecraftforge.fml.common.Mod.EventHandler
     public void onFMLInitialization(net.minecraftforge.fml.common.event.FMLInitializationEvent event) {
@@ -44,15 +46,21 @@ public class RenderTools {
         EventManager.INSTANCE.register(new GhostBlocker());
         MinecraftForge.EVENT_BUS.register(new Trajectories());
         MinecraftForge.EVENT_BUS.register(new BlockOverlay());
+        MinecraftForge.EVENT_BUS.register(new JumpCircles());
 
-        //get the white list from https://gist.githubusercontent.com/ForBai/d455aa0be5602bb91900858e3d4760eb/raw/a65f20b7bfc55eaae2d3dbdb2be24d1ab5824eca/wihtelist
-        //and put it in the whiteListedUUIDs
-        String[] lines = NetworkUtils.getString("https://gist.githubusercontent.com/ForBai/d455aa0be5602bb91900858e3d4760eb/raw/a65f20b7bfc55eaae2d3dbdb2be24d1ab5824eca/wihtelist")
-                .split("\n");
-        whiteListedUUIDs.addAll(Arrays.asList(lines));
+        if (!isDev) {
+            //get the white list from https://gist.githubusercontent.com/ForBai/d455aa0be5602bb91900858e3d4760eb/raw/a65f20b7bfc55eaae2d3dbdb2be24d1ab5824eca/wihtelist
+            //and put it in the whiteListedUUIDs
+            String[] lines = NetworkUtils.getString("https://gist.githubusercontent.com/ForBai/d455aa0be5602bb91900858e3d4760eb/raw/a65f20b7bfc55eaae2d3dbdb2be24d1ab5824eca/wihtelist")
+                    .split("\n");
+            whiteListedUUIDs.addAll(Arrays.asList(lines));
 
-        //get the uuid of the player and check if it is in the white list
-        canUseHidden = whiteListedUUIDs.contains(mc.getSession().getPlayerID().replaceAll("-", ""));
+            //get the uuid of the player and check if it is in the white list
+            canUseHidden = whiteListedUUIDs.contains(mc.getSession().getPlayerID().replaceAll("-", ""));
+        } else {
+            canUseHidden = true;
+        }
+
     }
 
     @SubscribeEvent
