@@ -1,6 +1,5 @@
 package me.anemoi.rendertools;
 
-import cc.polyfrost.oneconfig.config.core.OneKeyBind;
 import cc.polyfrost.oneconfig.events.EventManager;
 import cc.polyfrost.oneconfig.utils.NetworkUtils;
 import cc.polyfrost.oneconfig.utils.commands.CommandManager;
@@ -46,7 +45,6 @@ public class RenderTools {
         EventManager.INSTANCE.register(new GhostBlocker());
         MinecraftForge.EVENT_BUS.register(new Trajectories());
         MinecraftForge.EVENT_BUS.register(new BlockOverlay());
-        MinecraftForge.EVENT_BUS.register(new JumpCircles());
 
         if (!isDev) {
             //get the white list from https://gist.githubusercontent.com/ForBai/d455aa0be5602bb91900858e3d4760eb/raw/a65f20b7bfc55eaae2d3dbdb2be24d1ab5824eca/wihtelist

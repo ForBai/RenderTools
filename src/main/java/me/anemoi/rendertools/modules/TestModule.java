@@ -13,7 +13,7 @@ import static org.lwjgl.opengl.GL11.glRotatef;
 
 public class TestModule {
     //private BoundedAnimation anim = new BoundedAnimation(1, 500, 2000, false, Easing.CUBIC_IN_OUT);
-
+/*
     @SubscribeEvent
     public void onRenderWordl(RenderWorldLastEvent event) {
         if (mc.thePlayer == null || mc.theWorld == null || !TestConfig.toggled) return;
@@ -34,6 +34,8 @@ public class TestModule {
             }
         });
          */
+    /*
     }
+    */
 
 }

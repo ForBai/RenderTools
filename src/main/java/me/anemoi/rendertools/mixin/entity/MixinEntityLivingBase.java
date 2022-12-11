@@ -1,26 +1,16 @@
 package me.anemoi.rendertools.mixin.entity;
 
 import me.anemoi.rendertools.config.modules.HitAnimationConfig;
-import me.anemoi.rendertools.modules.JumpCircles;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(value = {EntityLivingBase.class}, priority = 20000)
-public abstract class MixinEntityLivingBase extends Entity {
-
-    public MixinEntityLivingBase(World worldIn) {
-        super(worldIn);
-    }
+public abstract class MixinEntityLivingBase extends EntitiyMixin {
 
     @Shadow
     public abstract PotionEffect getActivePotionEffect(Potion potionIn);
@@ -28,10 +18,6 @@ public abstract class MixinEntityLivingBase extends Entity {
     @Shadow
     public abstract boolean isPotionActive(Potion potionIn);
 
-    @Inject(method = "jump", at = @At("HEAD"))
-    private void onJump(CallbackInfo ci) {
-        JumpCircles.instance.handleEntityJump(this);
-    }
 
     /**
      * @author Liuli
@@ -40,9 +26,9 @@ public abstract class MixinEntityLivingBase extends Entity {
     private int getArmSwingAnimationEnd() {
         int speed = this.isPotionActive(Potion.digSpeed) ? 6 - (1 + this.getActivePotionEffect(Potion.digSpeed).getAmplifier()) : (this.isPotionActive(Potion.digSlowdown) ? 6 + (1 + this.getActivePotionEffect(Potion.digSlowdown).getAmplifier()) * 2 : 6);
 
-        if (this.equals(Minecraft.getMinecraft().thePlayer)) {
+        //if (this.equals(Minecraft.getMinecraft().thePlayer)) {
             speed = (int) (speed * HitAnimationConfig.swingSpeed);
-        }
+        //}
 
         return speed;
     }
