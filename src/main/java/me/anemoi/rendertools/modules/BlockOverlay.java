@@ -123,11 +123,11 @@ public class BlockOverlay {
             GL11.glLineWidth((float) thickness);
         }
         GL11.glShadeModel(7425);
-        if (block instanceof BlockStairs) {
-            RenderBLockOverlay.drawStairs(blockPos, mc.theWorld.getBlockState(blockPos), boundingBox.expand(this.padding, this.padding, this.padding), side, entityX, entityY, entityZ, overlayStartColor, overlayEndColor, outlineStartColor, outlineEndColor, overlay, outline);
-        } else {
+        //if (block instanceof BlockStairs) {
+        //    RenderBLockOverlay.drawStairs(blockPos, mc.theWorld.getBlockState(blockPos), boundingBox.expand(this.padding, this.padding, this.padding), side, entityX, entityY, entityZ, overlayStartColor, overlayEndColor, outlineStartColor, outlineEndColor, overlay, outline);
+        //} else {
             RenderBLockOverlay.drawBlock(boundingBox.offset(-entityX, -entityY, -entityZ), side, overlayStartColor, overlayEndColor, outlineStartColor, outlineEndColor, overlay, outline);
-        }
+        //}
         GL11.glLineWidth(2.0f);
         GL11.glDisable(2848);
         GlStateManager.enableDepth();
