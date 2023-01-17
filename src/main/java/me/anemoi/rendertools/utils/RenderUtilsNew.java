@@ -1327,6 +1327,10 @@ public class RenderUtilsNew {
         GlStateManager.popMatrix();
     }
 
+    public static void drawBox(AxisAlignedBB bb, float width,Color color){
+        drawBoundingBox(bb, width, color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f, color.getAlpha() / 255f);
+    }
+
     public static void drawFilledBoundingBox(AxisAlignedBB box, Color color, boolean outlined) {
         RenderUtils.glColor(color);
         drawFilledTopFace(box);
@@ -1540,5 +1544,22 @@ public class RenderUtilsNew {
         tessellator.draw();
     }
 
+
+    public static void beginRender() {
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        GlStateManager.tryBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
+        GlStateManager.enableBlend();
+        GlStateManager.disableLighting();
+        GlStateManager.disableCull();
+        //GlStateManager.color(1, 1, 1, 1);
+    }
+
+
+    public static void endRender() {
+        //GlStateManager.resetColor();
+        GlStateManager.enableCull();
+        GlStateManager.enableLighting();
+        GlStateManager.disableBlend();
+    }
 
 }

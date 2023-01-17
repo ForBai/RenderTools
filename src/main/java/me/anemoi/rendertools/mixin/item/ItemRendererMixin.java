@@ -183,7 +183,9 @@ public abstract class ItemRendererMixin {
                     }
                 }
             } else {
-                if (!HitAnimationConfig.toggled) this.doItemUsedTransformations(swingProgress);
+                if (HitAnimationConfig.swingType == 0) {
+                    this.doItemUsedTransformations(swingProgress);
+                }
                 this.transformFirstPersonItem(f, swingProgress);
             }
             this.renderItem(abstractclientplayer, this.itemToRender, ItemCameraTransforms.TransformType.FIRST_PERSON);
@@ -207,12 +209,45 @@ public abstract class ItemRendererMixin {
         float z = (float) AnimationsConfig.z;
         GlStateManager.translate((float) (0.56f * x), (float) (-0.52f * y), (float) (-0.71999997f * z));
         GlStateManager.translate((float) 0.0f, (float) (equipProgress * -0.6f), (float) 0.0f);
+
         GlStateManager.rotate((float) 45.0f, (float) 0.0f, (float) 1.0f, (float) 0.0f);
-        float f = MathHelper.sin((float) (swingProgress * swingProgress * (float) Math.PI));
-        float f1 = MathHelper.sin((float) (MathHelper.sqrt_float((float) swingProgress) * (float) Math.PI));
-        GlStateManager.rotate((float) (f * -20.0f), (float) 0.0f, (float) 1.0f, (float) 0.0f);
-        GlStateManager.rotate((float) (f1 * -20.0f), (float) 0.0f, (float) 0.0f, (float) 1.0f);
-        GlStateManager.rotate((float) (f1 * -80.0f), (float) 1.0f, (float) 0.0f, (float) 0.0f);
+
+        float swingProgress1 = MathHelper.sin((float) (swingProgress * swingProgress * (float) Math.PI));
+        float swingProgress2 = MathHelper.sin((float) (MathHelper.sqrt_float((float) swingProgress) * (float) Math.PI));
+
+        if (mc.thePlayer.isBlocking() || HitAnimationConfig.swingType == 0 || HitAnimationConfig.swingType == 1) {
+            GlStateManager.rotate((float) (swingProgress1 * -20.0f), (float) 0.0f, (float) 1.0f, (float) 0.0f);
+            GlStateManager.rotate((float) (swingProgress2 * -20.0f), (float) 0.0f, (float) 0.0f, (float) 1.0f);
+            GlStateManager.rotate((float) (swingProgress2 * -80.0f), (float) 1.0f, (float) 0.0f, (float) 0.0f);
+        }else {
+            switch (HitAnimationConfig.swingType){
+                case 2: {
+                    GlStateManager.rotate(swingProgress1 * 0.0F, 0.0F, 1.0F, 0.0F);
+                    GlStateManager.rotate(swingProgress2 * 0.0F, 0.0F, 0.0f, 1.0F);
+                    GlStateManager.rotate(swingProgress2 * -40.0F, 1.0F, 0.0F, 0.0F);
+                    break;
+                }
+                case 3: {
+                    GlStateManager.rotate(swingProgress1 * 20.0F, 1.0F, 0.0F, 0.0F);
+                    GlStateManager.rotate(swingProgress2 * 0.0F, 0.0F, 0.0f, 0.0F);
+                    GlStateManager.rotate(swingProgress2 * -10.0F, 1.0F, 0.0F, -4.0F);
+                    break;
+                }
+                case 4: {
+                    GlStateManager.rotate(swingProgress1 * -20.0f, 0.0f, 1.0f, 0.0f);
+                    GlStateManager.rotate(swingProgress2 * -20.0f, 0.0f, 0.0f, 1.0f);
+                    GlStateManager.rotate(swingProgress2 * -40.0f, 1.0f, 0.0f, 0.0f);
+                    break;
+                }
+                case 5:{
+                    GlStateManager.rotate(swingProgress1 * 0.0F, 0.0F, 1.0F, 0.0F);
+                    GlStateManager.rotate(swingProgress2 * 0.0F, 0.0F, 0.0f, 1.0F);
+                    GlStateManager.rotate(swingProgress2 * -80.0F, 1.0F, 0.0F, 0.0F);
+                    break;
+                }
+            }
+        }
+
         GlStateManager.scale((float) (0.4f * size), (float) (0.4f * size), (float) (0.4f * size));
     }
 

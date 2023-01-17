@@ -53,6 +53,9 @@ public class MainConfig extends Config {
     @Page(name = "Jump Circles", description = "Coming soon(Very WIP)", location = PageLocation.TOP)
     public static JumpCircleConfig jumpCircleConfig = new JumpCircleConfig();
 
+    @Page(name = "Item Physics", location = PageLocation.TOP)
+    public static ItemPhysicsConfig itemPhysics = new ItemPhysicsConfig();
+
     //other
     @KeyBind(name = "Create Ghost Block's", category = "Other")
     public static OneKeyBind createGhostBlocks = new OneKeyBind(UKeyboard.KEY_NONE);

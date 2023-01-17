@@ -6,11 +6,14 @@
   "verbose": true,
   "client": [
     "MinecraftMixin",
+    "entity.IEntityRenderer",
     "entity.MixinEntityLivingBase",
     "entity.MixinEntityPlayerSP",
     "entity.MixinRenderPlayer",
     "entity.NickHider",
     "item.ItemRendererMixin",
+    "item.MixinRenderEntityItem",
+    "renderer.IRenderManager",
     "renderer.MixinEntityRenderer"
   ],
   "mixins": [

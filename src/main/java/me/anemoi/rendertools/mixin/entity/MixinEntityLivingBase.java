@@ -1,7 +1,6 @@
 package me.anemoi.rendertools.mixin.entity;
 
 import me.anemoi.rendertools.config.modules.HitAnimationConfig;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
@@ -24,10 +23,10 @@ public abstract class MixinEntityLivingBase extends EntitiyMixin {
      */
     @Overwrite
     private int getArmSwingAnimationEnd() {
-        int speed = this.isPotionActive(Potion.digSpeed) ? 6 - (1 + this.getActivePotionEffect(Potion.digSpeed).getAmplifier()) : (this.isPotionActive(Potion.digSlowdown) ? 6 + (1 + this.getActivePotionEffect(Potion.digSlowdown).getAmplifier()) * 2 : 6);
+        int speed = HitAnimationConfig.ignoreHaste ? 6 : this.isPotionActive(Potion.digSpeed) ? 6 - (1 + this.getActivePotionEffect(Potion.digSpeed).getAmplifier()) : (this.isPotionActive(Potion.digSlowdown) ? 6 + (1 + this.getActivePotionEffect(Potion.digSlowdown).getAmplifier()) * 2 : 6);
 
         //if (this.equals(Minecraft.getMinecraft().thePlayer)) {
-            speed = (int) (speed * HitAnimationConfig.swingSpeed);
+        speed = (int) (speed * HitAnimationConfig.swingSpeed);
         //}
 
         return speed;
