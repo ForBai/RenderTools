@@ -33,7 +33,7 @@ public class HitAnimationConfig {
                     "Vanilla",//0
                     "Custom",//1
                     "Slide",//2
-                    "Custome 2",//3
+                    "Custom 2",//3
                     "Custom 3",//4
                     "Custom 4",//5
                     "Front Hit"//6
