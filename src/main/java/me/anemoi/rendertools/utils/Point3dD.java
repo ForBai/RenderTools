@@ -41,6 +41,11 @@ public class Point3dD {
         return new Point3dD(this.x + x, this.y + y, this.z + z);
     }
 
+    //subtract
+    public Point3dD subtract(double x, double y, double z) {
+        return new Point3dD(this.x - x, this.y - y, this.z - z);
+    }
+
     public double getX() {
         return x;
     }

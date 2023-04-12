@@ -1,8 +1,6 @@
 package me.anemoi.rendertools.utils;
 
-import cc.polyfrost.oneconfig.gui.OneConfigGui;
 import cc.polyfrost.oneconfig.renderer.NanoVGHelper;
-import cc.polyfrost.oneconfig.renderer.asset.AssetHelper;
 import me.anemoi.rendertools.RenderTools;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -873,9 +871,9 @@ public class RenderUtilsNew {
         GlStateManager.doPolygonOffset(1.0F, 1000000.0F);
         GlStateManager.disablePolygonOffset();
     }
-
+/*
     public static void drawImage(long vg, String filePath, float x, float y, float width, float height, int color) {
-        if (AssetHelper.INSTANCE.loadImage(vg, filePath)) {
+        if (AssetHelper.INSTANCE.loadImage(vg, )) {
             NVGPaint imagePaint = NVGPaint.calloc();
             int image = AssetHelper.INSTANCE.getImage(filePath);
             nvgBeginPath(vg);
@@ -887,7 +885,8 @@ public class RenderUtilsNew {
             imagePaint.free();
         }
     }
-
+ */
+/*
     public static void drawImage(long vg, String filePath, float x, float y, float width, float height) {
         if (AssetHelper.INSTANCE.loadImage(vg, filePath)) {
             NVGPaint imagePaint = NVGPaint.calloc();
@@ -900,7 +899,8 @@ public class RenderUtilsNew {
             imagePaint.free();
         }
     }
-
+ */
+/*
     public static void drawSvg(long vg, String filePath, float x, float y, float width, float height) {
         float w = width;
         float h = height;
@@ -919,8 +919,8 @@ public class RenderUtilsNew {
             imagePaint.free();
         }
     }
-
-    public static void drawSvg(long vg, String filePath, float x, float y, float width, float height, int color) {
+*/
+  /*  public static void drawSvg(long vg, String filePath, float x, float y, float width, float height, int color) {
         float w = width;
         float h = height;
         if (OneConfigGui.INSTANCE != null) {
@@ -939,7 +939,7 @@ public class RenderUtilsNew {
             imagePaint.free();
         }
     }
-
+*/
     //draw gradient Rounded Rectangle
 
     /**
@@ -1327,7 +1327,7 @@ public class RenderUtilsNew {
         GlStateManager.popMatrix();
     }
 
-    public static void drawBox(AxisAlignedBB bb, float width,Color color){
+    public static void drawBox(AxisAlignedBB bb, float width, Color color) {
         drawBoundingBox(bb, width, color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f, color.getAlpha() / 255f);
     }
 

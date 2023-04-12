@@ -18,7 +18,8 @@ public class GhostBlocker {
 
     @Subscribe
     public void onTick(TickEvent event) {
-        if (mc.thePlayer == null || mc.theWorld == null || !MainConfig.anemoi || MainConfig.createGhostBlocks.getKeyBinds().isEmpty()) return;
+        if (mc.thePlayer == null || mc.theWorld == null || !MainConfig.anemoi || MainConfig.createGhostBlocks.getKeyBinds().isEmpty())
+            return;
         for (Integer inte : MainConfig.createGhostBlocks.getKeyBinds()) {
             if (inte == UKeyboard.KEY_NONE) return;
             if (!Keyboard.isKeyDown(inte)) return;

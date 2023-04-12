@@ -10,12 +10,6 @@ public class BlockOverlayConfig {
     @Switch(name = "Toggled")
     public static boolean toggled = false;
 
-    //@Switch(name = "Show Block Name")
-    //public static boolean showBlockName = false;
-
-    //@Switch(name = "Infinite distance", description = "Shows the block overlay even if you are far away from the block")
-    //public static boolean infiniteDistance = false;
-
     @Slider(name = "Line Width", min = 0.1F, max = 5.0F)
     public static float lineWidth = 1.0F;
 
@@ -24,11 +18,6 @@ public class BlockOverlayConfig {
             options = {"Hidden", "Normal", "Side", "Full"} // options
     )
     public static int mode = 1;
-/*
-    @Switch(name = "Animate",description = "Animate the box going from on block to another. Try it yourself!")
-    public static boolean animate = false;
-
- */
 
     @Switch(name = "Hide plants")
     public static boolean hidePlants = false;
@@ -50,6 +39,12 @@ public class BlockOverlayConfig {
 
     @Switch(name = "Outline Color")
     public static boolean outlineColor = true;
+
+    //@Switch(name = "Slide", description = "Slide the overlay")
+    //public static boolean slide = false;
+
+    //@Slider(name = "Slide Time", min = 10, max = 1000)
+    //public static int slideTime = 100;
 
     @Color(name = "First Color Overlay")
     public static OneColor colorFO = new OneColor(new java.awt.Color(255, 255, 255, 255));

@@ -56,6 +56,9 @@ public class MainConfig extends Config {
     @Page(name = "Item Physics", location = PageLocation.TOP)
     public static ItemPhysicsConfig itemPhysics = new ItemPhysicsConfig();
 
+    @Page(name = "Glint Color", location = PageLocation.TOP)
+    public static GlintColorConfig glintColor = new GlintColorConfig();
+
     //other
     @KeyBind(name = "Create Ghost Block's", category = "Other")
     public static OneKeyBind createGhostBlocks = new OneKeyBind(UKeyboard.KEY_NONE);

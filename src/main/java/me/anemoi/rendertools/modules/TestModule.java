@@ -1,16 +1,5 @@
 package me.anemoi.rendertools.modules;
 
-import cc.polyfrost.oneconfig.events.event.HudRenderEvent;
-import cc.polyfrost.oneconfig.libs.eventbus.Subscribe;
-import me.anemoi.rendertools.RenderTools;
-import me.anemoi.rendertools.config.modules.TestConfig;
-import net.minecraftforge.client.event.RenderHandEvent;
-import net.minecraftforge.client.event.RenderWorldLastEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-
-import static me.anemoi.rendertools.RenderTools.mc;
-import static org.lwjgl.opengl.GL11.glRotatef;
-
 public class TestModule {
     //private BoundedAnimation anim = new BoundedAnimation(1, 500, 2000, false, Easing.CUBIC_IN_OUT);
 /*

@@ -5,7 +5,6 @@ import me.anemoi.rendertools.utils.Animator;
 import me.anemoi.rendertools.utils.RenderBLockOverlay;
 import me.anemoi.rendertools.utils.RenderUtils;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockStairs;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.BlockRendererDispatcher;
 import net.minecraft.client.renderer.GlStateManager;
@@ -126,7 +125,7 @@ public class BlockOverlay {
         //if (block instanceof BlockStairs) {
         //    RenderBLockOverlay.drawStairs(blockPos, mc.theWorld.getBlockState(blockPos), boundingBox.expand(this.padding, this.padding, this.padding), side, entityX, entityY, entityZ, overlayStartColor, overlayEndColor, outlineStartColor, outlineEndColor, overlay, outline);
         //} else {
-            RenderBLockOverlay.drawBlock(boundingBox.offset(-entityX, -entityY, -entityZ), side, overlayStartColor, overlayEndColor, outlineStartColor, outlineEndColor, overlay, outline);
+        RenderBLockOverlay.drawBlock(boundingBox.offset(-entityX, -entityY, -entityZ), side, overlayStartColor, overlayEndColor, outlineStartColor, outlineEndColor, overlay, outline);
         //}
         GL11.glLineWidth(2.0f);
         GL11.glDisable(2848);

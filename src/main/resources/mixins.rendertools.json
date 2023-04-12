@@ -9,10 +9,11 @@
     "entity.IEntityRenderer",
     "entity.MixinEntityLivingBase",
     "entity.MixinEntityPlayerSP",
+    "entity.MixinFontRenderer",
     "entity.MixinRenderPlayer",
-    "entity.NickHider",
     "item.ItemRendererMixin",
     "item.MixinRenderEntityItem",
+    "item.MixinRenderItem",
     "renderer.IRenderManager",
     "renderer.MixinEntityRenderer"
   ],

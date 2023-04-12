@@ -3,8 +3,10 @@ package me.anemoi.rendertools.modules
 import me.anemoi.rendertools.RenderTools.mc
 import me.anemoi.rendertools.config.modules.BreadCrumbsConfig
 import me.anemoi.rendertools.utils.RenderUtils
-import net.minecraft.entity.EntityLivingBase
+import net.minecraft.entity.Entity
+import net.minecraft.entity.item.EntityEnderPearl
 import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.entity.projectile.EntityArrow
 import net.minecraftforge.client.event.RenderWorldLastEvent
 import net.minecraftforge.event.world.WorldEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
@@ -153,11 +155,19 @@ class BreadCrumbsNew {
     fun onUpdate(event: TickEvent) {
         if (mc.thePlayer == null || mc.theWorld == null || !BreadCrumbsConfig.toggled) return
         // clear points for entities not exist
-        points.forEach { (id, _) ->
-            if (mc.theWorld.getEntityByID(id) == null) {
-                points.remove(id)
+        try {
+            points.forEach { (id, _) ->
+                if (mc.theWorld.getEntityByID(id) == null) {
+                    points.remove(id)
+                } else if (mc.theWorld.getEntityByID(id) is EntityArrow && (mc.theWorld.getEntityByID(id) as EntityArrow).onGround) {
+                    points.remove(id)
+                }
             }
+        } catch (_: Exception) {
+
         }
+
+
         // add new points
         if (mc.thePlayer.ticksExisted % BreadCrumbsConfig.precision != 0) {
             return // skip if not on tick
@@ -165,8 +175,8 @@ class BreadCrumbsNew {
         if (BreadCrumbsConfig.drawOthers) {
             mc.theWorld.loadedEntityList.forEach {
                 if (it == null || it.isDead) return
-                if (it is EntityPlayer && it !== mc.thePlayer) {
-                    updatePoints(it as EntityLivingBase)
+                if ((it is EntityPlayer || it is EntityEnderPearl || it is EntityArrow) && it !== mc.thePlayer) {
+                    updatePoints(it as Entity)
                 }
             }
         }
@@ -175,7 +185,7 @@ class BreadCrumbsNew {
         }
     }
 
-    private fun updatePoints(entity: EntityLivingBase) {
+    private fun updatePoints(entity: Entity) {
         if (BreadCrumbsConfig.only3dPerson && mc.gameSettings.thirdPersonView == 0) return
         (points[entity.entityId] ?: mutableListOf<BreadcrumbPoint>().also { points[entity.entityId] = it })
             .add(

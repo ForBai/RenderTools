@@ -1,7 +1,6 @@
 package me.anemoi.rendertools.mixin.entity;
 
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.gen.Accessor;
 import org.spongepowered.asm.mixin.gen.Invoker;
 
 @Mixin(value = {net.minecraft.client.renderer.EntityRenderer.class}, priority = 20000)

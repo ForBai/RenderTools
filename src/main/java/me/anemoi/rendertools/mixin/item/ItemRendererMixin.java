@@ -22,6 +22,9 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(value = {ItemRenderer.class}, priority = 20000)
 public abstract class ItemRendererMixin {
@@ -54,6 +57,11 @@ public abstract class ItemRendererMixin {
 
     @Shadow
     protected abstract void performDrinking(AbstractClientPlayer var1, float var2);
+
+    @Inject(method = "doItemUsedTransformations", at = @At("HEAD"), cancellable = true)
+    public void useTransform(float swingProgress, CallbackInfo ci) {
+        if (this.scaledSwing(swingProgress)) ci.cancel();
+    }
 
     @Shadow
     protected abstract void doItemUsedTransformations(float var1);
@@ -198,6 +206,16 @@ public abstract class ItemRendererMixin {
     }
 
 
+    public boolean scaledSwing(float swingProgress) {
+        if (!AnimationsConfig.toggled || !AnimationsConfig.scaledSwing) return false;
+        float scale = (float) Math.exp(AnimationsConfig.scaledSwingSize);
+        float f = -0.4f * MathHelper.sin(MathHelper.sqrt_float(swingProgress) * (float) Math.PI) * scale;
+        float f1 = 0.2f * MathHelper.sin(MathHelper.sqrt_float(swingProgress) * (float) Math.PI * 2.0f) * scale;
+        float f2 = -0.2f * MathHelper.sin(swingProgress * (float) Math.PI) * scale;
+        GlStateManager.translate(f, f1, f2);
+        return true;
+    }
+
     /**
      * @author a
      */
@@ -210,6 +228,9 @@ public abstract class ItemRendererMixin {
         GlStateManager.translate((float) (0.56f * x), (float) (-0.52f * y), (float) (-0.71999997f * z));
         GlStateManager.translate((float) 0.0f, (float) (equipProgress * -0.6f), (float) 0.0f);
 
+        GlStateManager.rotate((float) ((float) AnimationsConfig.pitch), (float) 1.0f, (float) 0.0f, (float) 0.0f);
+        GlStateManager.rotate((float) ((float) AnimationsConfig.yaw), (float) 0.0f, (float) 1.0f, (float) 0.0f);
+        GlStateManager.rotate((float) ((float) AnimationsConfig.roll), (float) 0.0f, (float) 0.0f, (float) 1.0f);
         GlStateManager.rotate((float) 45.0f, (float) 0.0f, (float) 1.0f, (float) 0.0f);
 
         float swingProgress1 = MathHelper.sin((float) (swingProgress * swingProgress * (float) Math.PI));
@@ -219,8 +240,8 @@ public abstract class ItemRendererMixin {
             GlStateManager.rotate((float) (swingProgress1 * -20.0f), (float) 0.0f, (float) 1.0f, (float) 0.0f);
             GlStateManager.rotate((float) (swingProgress2 * -20.0f), (float) 0.0f, (float) 0.0f, (float) 1.0f);
             GlStateManager.rotate((float) (swingProgress2 * -80.0f), (float) 1.0f, (float) 0.0f, (float) 0.0f);
-        }else {
-            switch (HitAnimationConfig.swingType){
+        } else {
+            switch (HitAnimationConfig.swingType) {
                 case 2: {
                     GlStateManager.rotate(swingProgress1 * 0.0F, 0.0F, 1.0F, 0.0F);
                     GlStateManager.rotate(swingProgress2 * 0.0F, 0.0F, 0.0f, 1.0F);
@@ -239,10 +260,17 @@ public abstract class ItemRendererMixin {
                     GlStateManager.rotate(swingProgress2 * -40.0f, 1.0f, 0.0f, 0.0f);
                     break;
                 }
-                case 5:{
+                case 5: {
                     GlStateManager.rotate(swingProgress1 * 0.0F, 0.0F, 1.0F, 0.0F);
                     GlStateManager.rotate(swingProgress2 * 0.0F, 0.0F, 0.0f, 1.0F);
                     GlStateManager.rotate(swingProgress2 * -80.0F, 1.0F, 0.0F, 0.0F);
+                    break;
+                }
+                case 6: {
+                    GlStateManager.rotate((float) (swingProgress1 * -20.0f), (float) 0.0f, (float) 1.0f, (float) 0.0f);
+                    GlStateManager.rotate((float) (swingProgress2 * -20.0f), (float) 0.0f, (float) 0.0f, (float) 1.0f);
+                    GlStateManager.rotate((float) (swingProgress2 * -80.0f), (float) 1.0f, (float) 0.0f, (float) 0.0f);
+                    GlStateManager.translate((float) 0.0f, (float) swingProgress1 * 0.2f, (float) swingProgress1 * -0.2f);
                     break;
                 }
             }
