@@ -23,7 +23,7 @@ public abstract class MixinEntityRenderer {
     @Redirect(method = "setupFog", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/EntityLivingBase;isPotionActive(Lnet/minecraft/potion/Potion;)Z"))
     public boolean removeBlindness(EntityLivingBase instance, Potion potionIn) {
         //100% legit doesnt do anything at all but is needed to make the game not crash and fix bugs
-        return false;
+        return MainConfig.anemoi ? false : true;
     }
 
     @Inject(method = "hurtCameraEffect", at = {@At(value = "HEAD")}, cancellable = true)
