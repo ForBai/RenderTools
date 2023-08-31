@@ -1,5 +1,3 @@
-# DEVELOPMENT CURRENTLY PAUSED
-
 # RenderTools
 A Mod That adds various rendering things to make life easier and more fun.
 
@@ -8,7 +6,7 @@ Big thanks to following Creators:
 - Oringo: For many of the rendering features
 - PolyFrost: For the Config system and Command system
 
-If you dont find your name here, please contact me(Anemoi#7990).
+If you dont find your name here, please contact me(`forbai`).
 And if you want any other things added just create a pull request, issue or contact me.
 
 # Thanks for using my mod!
