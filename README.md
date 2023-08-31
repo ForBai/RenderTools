@@ -1,5 +1,3 @@
-# DEVELOPMENT CURRENTLY PAUSED
-
 # RenderTools
 A Mod That adds various rendering things to make life easier and more fun.
 
