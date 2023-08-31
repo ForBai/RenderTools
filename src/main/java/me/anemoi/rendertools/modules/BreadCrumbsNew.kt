@@ -3,10 +3,8 @@ package me.anemoi.rendertools.modules
 import me.anemoi.rendertools.RenderTools.mc
 import me.anemoi.rendertools.config.modules.BreadCrumbsConfig
 import me.anemoi.rendertools.utils.RenderUtils
-import net.minecraft.entity.Entity
-import net.minecraft.entity.item.EntityEnderPearl
+import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.entity.projectile.EntityArrow
 import net.minecraftforge.client.event.RenderWorldLastEvent
 import net.minecraftforge.event.world.WorldEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
@@ -14,7 +12,6 @@ import net.minecraftforge.fml.common.gameevent.TickEvent
 import org.lwjgl.opengl.GL11
 import org.lwjgl.util.glu.GLU
 import org.lwjgl.util.glu.Sphere
-import java.awt.Color
 
 class BreadCrumbsNew {
     private val points = mutableMapOf<Int, MutableList<BreadcrumbPoint>>()
@@ -36,7 +33,6 @@ class BreadCrumbsNew {
         if (mc.thePlayer == null || mc.theWorld == null || !BreadCrumbsConfig.toggled) return
         if (BreadCrumbsConfig.only3dPerson && mc.gameSettings.thirdPersonView == 0) return
 
-
         val fTime = BreadCrumbsConfig.fadeTime * 1000
         val fadeSec = System.currentTimeMillis() - fTime
         val colorAlpha = BreadCrumbsConfig.alpha / 255.0f
@@ -56,10 +52,11 @@ class BreadCrumbsNew {
             var lastPosZ = 114514.0
             when (BreadCrumbsConfig.mode) {
                 0 -> {
-                    GL11.glLineWidth(BreadCrumbsConfig.width.toFloat())
+                    GL11.glLineWidth(BreadCrumbsConfig.lineWidth.toFloat())
                     GL11.glEnable(GL11.GL_LINE_SMOOTH)
                     GL11.glBegin(GL11.GL_LINE_STRIP)
                 }
+
                 1 -> {
                     GL11.glDisable(GL11.GL_CULL_FACE)
                 }
@@ -97,6 +94,7 @@ class BreadCrumbsNew {
                         lastPosY = point.y - renderPosY
                         lastPosZ = point.z - renderPosZ
                     }
+
                     2 -> {
                         GL11.glPushMatrix()
                         GL11.glTranslated(point.x - renderPosX, point.y - renderPosY, point.z - renderPosZ)
@@ -108,26 +106,28 @@ class BreadCrumbsNew {
                         GL11.glCallList(sphereList)
                         GL11.glPopMatrix()
                     }
+
                     3 -> {
+
                         val circleScale = BreadCrumbsConfig.sphereScale
-                        RenderUtils.glColor(point.color, 30)
+                        RenderUtils.glColor(point.color, 38)
                         GL11.glPushMatrix()
                         GL11.glTranslated(point.x - renderPosX, point.y - renderPosY, point.z - renderPosZ)
-                        GL11.glScalef(circleScale * 1.3f, circleScale * 1.3f, circleScale * 1.3f)
+                        GL11.glScalef(circleScale * 2.3f, circleScale * 2.3f, circleScale * 2.3f)
                         GL11.glCallList(sphereList)
                         GL11.glPopMatrix()
 
-                        RenderUtils.glColor(point.color, 50)
+                        RenderUtils.glColor(point.color, 63)
                         GL11.glPushMatrix()
                         GL11.glTranslated(point.x - renderPosX, point.y - renderPosY, point.z - renderPosZ)
-                        GL11.glScalef(circleScale * 0.8f, circleScale * 0.8f, circleScale * 0.8f)
+                        GL11.glScalef(circleScale * 1.4f, circleScale * 1.4f, circleScale * 1.4f)
                         GL11.glCallList(sphereList)
                         GL11.glPopMatrix()
 
-                        RenderUtils.glColor(point.color, alpha)
+                        RenderUtils.glColor(point.color, 153)
                         GL11.glPushMatrix()
                         GL11.glTranslated(point.x - renderPosX, point.y - renderPosY, point.z - renderPosZ)
-                        GL11.glScalef(circleScale * 0.4f, circleScale * 0.4f, circleScale * 0.4f)
+                        GL11.glScalef(circleScale * 0.7f, circleScale * 0.7f, circleScale * 0.7f)
                         GL11.glCallList(sphereList)
                         GL11.glPopMatrix()
 
@@ -139,6 +139,7 @@ class BreadCrumbsNew {
                     GL11.glEnd()
                     GL11.glDisable(GL11.GL_LINE_SMOOTH)
                 }
+
                 1 -> {
                     GL11.glEnable(GL11.GL_CULL_FACE)
                 }
@@ -155,28 +156,19 @@ class BreadCrumbsNew {
     fun onUpdate(event: TickEvent) {
         if (mc.thePlayer == null || mc.theWorld == null || !BreadCrumbsConfig.toggled) return
         // clear points for entities not exist
-        try {
-            points.forEach { (id, _) ->
-                if (mc.theWorld.getEntityByID(id) == null) {
-                    points.remove(id)
-                } else if (mc.theWorld.getEntityByID(id) is EntityArrow && (mc.theWorld.getEntityByID(id) as EntityArrow).onGround) {
-                    points.remove(id)
-                }
+        points.forEach { (id, _) ->
+            if (mc.theWorld.getEntityByID(id) == null) {
+                points.remove(id)
             }
-        } catch (_: Exception) {
-
         }
-
-
         // add new points
         if (mc.thePlayer.ticksExisted % BreadCrumbsConfig.precision != 0) {
             return // skip if not on tick
         }
         if (BreadCrumbsConfig.drawOthers) {
             mc.theWorld.loadedEntityList.forEach {
-                if (it == null || it.isDead) return
-                if ((it is EntityPlayer || it is EntityEnderPearl || it is EntityArrow) && it !== mc.thePlayer) {
-                    updatePoints(it as Entity)
+                if (it is EntityPlayer && it !== mc.thePlayer) {
+                    updatePoints(it as EntityLivingBase)
                 }
             }
         }
@@ -185,8 +177,7 @@ class BreadCrumbsNew {
         }
     }
 
-    private fun updatePoints(entity: Entity) {
-        if (BreadCrumbsConfig.only3dPerson && mc.gameSettings.thirdPersonView == 0) return
+    private fun updatePoints(entity: EntityLivingBase) {
         (points[entity.entityId] ?: mutableListOf<BreadcrumbPoint>().also { points[entity.entityId] = it })
             .add(
                 BreadcrumbPoint(
@@ -194,14 +185,14 @@ class BreadCrumbsNew {
                     entity.entityBoundingBox.minY,
                     entity.posZ,
                     System.currentTimeMillis(),
-                    Color(
-                        BreadCrumbsConfig.color.red,
-                        BreadCrumbsConfig.color.green,
-                        BreadCrumbsConfig.color.blue,
-                        BreadCrumbsConfig.alpha
-                    ).rgb
+                    BreadCrumbsConfig.color.rgb
                 )
             )
+    }
+
+    @SubscribeEvent
+    fun onWorld(event: WorldEvent.Load) {
+        points.clear()
     }
 
     @SubscribeEvent

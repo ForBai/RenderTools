@@ -5,10 +5,7 @@ import cc.polyfrost.oneconfig.libs.eventbus.Subscribe;
 import me.anemoi.rendertools.config.modules.ProjectilesConfig;
 import me.anemoi.rendertools.utils.Point3dD;
 import net.minecraft.network.play.server.S0EPacketSpawnObject;
-import net.minecraft.network.play.server.S2APacketParticles;
-import net.minecraft.util.Vector3d;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
-import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
@@ -23,24 +20,24 @@ public class Projectiles {
     public static Map<Integer, Projectile> projectiles = new HashMap<>();
 
     @SubscribeEvent
-    public void onTick(TickEvent event){
-        if (!ProjectilesConfig.toggled)return;
+    public void onTick(TickEvent event) {
+        if (!ProjectilesConfig.toggled) return;
         tickProjectiles();
     }
 
     @SubscribeEvent
-    public void onRender(RenderWorldLastEvent event){
-        if (!ProjectilesConfig.toggled)return;
+    public void onRender(RenderWorldLastEvent event) {
+        if (!ProjectilesConfig.toggled) return;
         renderProjectiles(event.partialTicks);
     }
 
     @Subscribe
-    public void onEntitySpawn(ReceivePacketEvent event){
-        if (!ProjectilesConfig.toggled)return;
+    public void onEntitySpawn(ReceivePacketEvent event) {
+        if (!ProjectilesConfig.toggled) return;
         if (event.packet instanceof S0EPacketSpawnObject) {
             S0EPacketSpawnObject packet = (S0EPacketSpawnObject) event.packet;
             //if (packet.) {
-                addProjectile(packet.getEntityID(), new Point3dD(packet.getX(), packet.getY(), packet.getZ()), new Point3dD(packet.getSpeedX(), packet.getSpeedY(), packet.getSpeedZ()), packet.func_149009_m());
+            addProjectile(packet.getEntityID(), new Point3dD(packet.getX(), packet.getY(), packet.getZ()), new Point3dD(packet.getSpeedX(), packet.getSpeedY(), packet.getSpeedZ()), packet.func_149009_m());
             //}
         }
     }
@@ -100,7 +97,7 @@ public class Projectiles {
             g *= fade;
             b *= fade;
             a *= fade;
-            me.anemoi.rendertools.utils.RenderUtilsNew.drawLine(pos.getVec3d(), pos.subtract(motion.getX(), motion.getY(), motion.getZ()).getVec3d(), ProjectilesConfig.color.toJavaColor(),partialTicks,false);
+            me.anemoi.rendertools.utils.RenderUtilsNew.drawLine(pos.getVec3d(), pos.subtract(motion.getX(), motion.getY(), motion.getZ()).getVec3d(), ProjectilesConfig.color.toJavaColor(), partialTicks, false);
         }
 
         public boolean isDead() {

@@ -74,7 +74,7 @@ public class BreadCrumbsConfig {
             max = 10.0F,
             step = 1
     )
-    public static int width = 1;
+    public static int lineWidth = 1;
 
     @Slider(
             name = "Sphere Scale",

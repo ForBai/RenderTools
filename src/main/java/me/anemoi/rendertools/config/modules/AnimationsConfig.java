@@ -29,7 +29,7 @@ public class AnimationsConfig {
     @Slider(name = "size", min = 0.01F, max = 3.0F)
     public static float size = 1.0F;
 
-    @Slider(name = "Scaled Swing Size", min =-1.5f,max = 1.5f)
+    @Slider(name = "Scaled Swing Size", min = -1.5f, max = 1.5f)
     public static float scaledSwingSize = 0.0f;
 
     @Dropdown(name = "Mode", options = {"1.7", "chill", "push", "spin", "vertical spin", "helicopter", "custom", "long hit", "old"})
@@ -46,5 +46,8 @@ public class AnimationsConfig {
 
     @Switch(name = "Scaled Swing")
     public static boolean scaledSwing = false;
+
+    @Switch(name = "Disable Equip Progress Y")
+    public static boolean disableEquipProgressY = false;
 
 }

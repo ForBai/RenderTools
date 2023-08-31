@@ -4,6 +4,8 @@ import cc.polyfrost.oneconfig.config.annotations.Button;
 import cc.polyfrost.oneconfig.config.annotations.Dropdown;
 import cc.polyfrost.oneconfig.config.annotations.Slider;
 import cc.polyfrost.oneconfig.config.annotations.Switch;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.UnsupportedFlavorException;
@@ -43,36 +45,28 @@ public class HitAnimationConfig {
 
     @Button(name = "Copy Config to clipboard", text = "Save Config")
     public static Runnable saveConfig = () -> {
-        /*generate a json string of the config that looks like following
-        {
-            "toggled": true,
-            "swingSpeed": 1.0,
-            "ignoreHaste": false,
-            "swingType": 0
-            }
-         */
-        String json = "{\n" +
-                "    \"swingSpeed\": " + swingSpeed + ",\n" +
-                "    \"ignoreHaste\": " + ignoreHaste + ",\n" +
-                "    \"swingType\": " + swingType + ",\n" +
-                "    \"toggled\": " + toggled + ",\n" +
-                "    \"x\": " + x + ",\n" +
-                "    \"y\": " + y + ",\n" +
-                "    \"z\": " + z + ",\n" +
-                "    \"pitch\": " + pitch + ",\n" +
-                "    \"yaw\": " + yaw + ",\n" +
-                "    \"roll\": " + roll + ",\n" +
-                "    \"size\": " + size + ",\n" +
-                "    \"scaledSwingSize\": " + scaledSwingSize + ",\n" +
-                "    \"mode\": " + mode + ",\n" +
-                "    \"swingProgress\": " + swingProgress + ",\n" +
-                "    \"special\": " + special + ",\n" +
-                "    \"rainbowEnchant\": " + rainbowEnchant + ",\n" +
-                "    \"scaledSwing\": " + scaledSwing + ",\n" +
-                "}";
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("swingSpeed", swingSpeed);
+        jsonObject.addProperty("ignoreHaste", ignoreHaste);
+        jsonObject.addProperty("swingType", swingType);
+        jsonObject.addProperty("toggled", toggled);
+        jsonObject.addProperty("x", x);
+        jsonObject.addProperty("y", y);
+        jsonObject.addProperty("z", z);
+        jsonObject.addProperty("pitch", pitch);
+        jsonObject.addProperty("yaw", yaw);
+        jsonObject.addProperty("roll", roll);
+        jsonObject.addProperty("size", size);
+        jsonObject.addProperty("scaledSwingSize", scaledSwingSize);
+        jsonObject.addProperty("mode", mode);
+        jsonObject.addProperty("swingProgress", swingProgress);
+        jsonObject.addProperty("special", special);
+        jsonObject.addProperty("rainbowEnchant", rainbowEnchant);
+        jsonObject.addProperty("scaledSwing", scaledSwing);
+        jsonObject.addProperty("disableEquipProgressY", disableEquipProgressY);
+        String json = jsonObject.toString();
         Base64.Encoder encoder = Base64.getEncoder();
         String encoded = encoder.encodeToString(json.getBytes());
-        System.out.println(encoded);
 
         //copy the encoded string to clipboard
         StringSelection stringSelection = new StringSelection(encoded);
@@ -92,71 +86,28 @@ public class HitAnimationConfig {
         }
         Base64.Decoder decoder = Base64.getDecoder();
         String json = new String(decoder.decode(encoded));
-        System.out.println(json);
 
         //parse the json string and set the config values
-        String[] lines = json.split("\n");
-        for (String line : lines) {
-            String[] parts = line.split(":");
-            if (parts.length != 2) {
-                continue;
-            }
-            String key = parts[0].trim();
-            String value = parts[1].replaceAll(",", "").trim();
-            switch (key) {
-                case "\"swingSpeed\"":
-                    swingSpeed = Float.parseFloat(value);
-                    break;
-                case "\"ignoreHaste\"":
-                    ignoreHaste = Boolean.parseBoolean(value);
-                    break;
-                case "\"swingType\"":
-                    swingType = Integer.parseInt(value);
-                    break;
-                case "\"toggled\"":
-                    toggled = Boolean.parseBoolean(value);
-                    break;
-                case "\"x\"":
-                    x = Float.parseFloat(value);
-                    break;
-                case "\"y\"":
-                    y = Float.parseFloat(value);
-                    break;
-                case "\"z\"":
-                    z = Float.parseFloat(value);
-                    break;
-                case "\"pitch\"":
-                    pitch = Float.parseFloat(value);
-                    break;
-                case "\"yaw\"":
-                    yaw = Float.parseFloat(value);
-                    break;
-                case "\"roll\"":
-                    roll = Float.parseFloat(value);
-                    break;
-                case "\"size\"":
-                    size = Float.parseFloat(value);
-                    break;
-                case "\"scaledSwingSize\"":
-                    scaledSwingSize = Float.parseFloat(value);
-                    break;
-                case "\"mode\"":
-                    mode = Integer.parseInt(value);
-                    break;
-                case "\"swingProgress\"":
-                    swingProgress = Boolean.parseBoolean(value);
-                    break;
-                case "\"special\"":
-                    special = Boolean.parseBoolean(value);
-                    break;
-                case "\"rainbowEnchant\"":
-                    rainbowEnchant = Boolean.parseBoolean(value);
-                    break;
-                case "\"scaledSwing\"":
-                    scaledSwing = Boolean.parseBoolean(value);
-                    break;
-            }
-        }
+        JsonParser parser = new JsonParser();
+        JsonObject jsonObject = parser.parse(json).getAsJsonObject();
+        swingSpeed = jsonObject.get("swingSpeed").getAsFloat();
+        ignoreHaste = jsonObject.get("ignoreHaste").getAsBoolean();
+        swingType = jsonObject.get("swingType").getAsInt();
+        toggled = jsonObject.get("toggled").getAsBoolean();
+        x = jsonObject.get("x").getAsFloat();
+        y = jsonObject.get("y").getAsFloat();
+        z = jsonObject.get("z").getAsFloat();
+        pitch = jsonObject.get("pitch").getAsFloat();
+        yaw = jsonObject.get("yaw").getAsFloat();
+        roll = jsonObject.get("roll").getAsFloat();
+        size = jsonObject.get("size").getAsFloat();
+        scaledSwingSize = jsonObject.get("scaledSwingSize").getAsFloat();
+        mode = jsonObject.get("mode").getAsInt();
+        swingProgress = jsonObject.get("swingProgress").getAsBoolean();
+        special = jsonObject.get("special").getAsBoolean();
+        rainbowEnchant = jsonObject.get("rainbowEnchant").getAsBoolean();
+        scaledSwing = jsonObject.get("scaledSwing").getAsBoolean();
+        disableEquipProgressY = jsonObject.get("disableEquipProgressY").getAsBoolean();
     };
 
 

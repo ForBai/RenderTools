@@ -226,7 +226,8 @@ public abstract class ItemRendererMixin {
         float y = (float) AnimationsConfig.y;
         float z = (float) AnimationsConfig.z;
         GlStateManager.translate((float) (0.56f * x), (float) (-0.52f * y), (float) (-0.71999997f * z));
-        GlStateManager.translate((float) 0.0f, (float) (equipProgress * -0.6f), (float) 0.0f);
+        if (!AnimationsConfig.disableEquipProgressY)
+            GlStateManager.translate((float) 0.0f, (float) (equipProgress * -0.6f), (float) 0.0f);
 
         GlStateManager.rotate((float) ((float) AnimationsConfig.pitch), (float) 1.0f, (float) 0.0f, (float) 0.0f);
         GlStateManager.rotate((float) ((float) AnimationsConfig.yaw), (float) 0.0f, (float) 1.0f, (float) 0.0f);
