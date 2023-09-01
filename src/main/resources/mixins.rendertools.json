@@ -11,6 +11,7 @@
     "entity.MixinEntityPlayerSP",
     "entity.MixinFontRenderer",
     "entity.MixinRenderPlayer",
+    "entity.PlayerControllerMPMixin",
     "item.ItemRendererMixin",
     "item.MixinRenderEntityItem",
     "item.MixinRenderItem",

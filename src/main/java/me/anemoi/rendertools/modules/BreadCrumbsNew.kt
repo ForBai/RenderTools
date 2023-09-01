@@ -153,7 +153,7 @@ class BreadCrumbsNew {
     }
 
     @SubscribeEvent
-    fun onUpdate(event: TickEvent) {
+    fun onUpdate(event: TickEvent.ClientTickEvent) {
         if (mc.thePlayer == null || mc.theWorld == null || !BreadCrumbsConfig.toggled) return
         // clear points for entities not exist
         points.forEach { (id, _) ->

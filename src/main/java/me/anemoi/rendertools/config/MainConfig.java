@@ -50,7 +50,7 @@ public class MainConfig extends Config {
     @Page(name = "Block Overlay", location = PageLocation.TOP)
     public static BlockOverlayConfig blockOverlay = new BlockOverlayConfig();
 
-    @Page(name = "Jump Circles", description = "Coming soon(Very WIP)", location = PageLocation.TOP)
+    @Page(name = "Jump Circles", location = PageLocation.TOP)
     public static JumpCircleConfig jumpCircleConfig = new JumpCircleConfig();
 
     @Page(name = "Item Physics", location = PageLocation.TOP)
@@ -58,6 +58,9 @@ public class MainConfig extends Config {
 
     @Page(name = "Glint Color", location = PageLocation.TOP)
     public static GlintColorConfig glintColor = new GlintColorConfig();
+
+    @Page(name = "Hit Particles", location = PageLocation.TOP)
+    public static HitParticlesConfig hitParticles = new HitParticlesConfig();
 
     //other
     @KeyBind(name = "Create Ghost Block's", category = "Other")

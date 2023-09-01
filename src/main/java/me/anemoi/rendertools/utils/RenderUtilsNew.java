@@ -10,6 +10,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
@@ -36,6 +37,7 @@ public class RenderUtilsNew {
     private static final Map<Integer, Boolean> glCapMap = new HashMap<>();
     private static final int[] DISPLAY_LISTS_2D = new int[4];
     private static final Minecraft mc = RenderTools.mc;
+    private static final Frustum frustrum = new Frustum();
     //private static final ResourceLocation beaconBeam = new ResourceLocation("textures/entity/beacon_beam.png");
 
     static {
@@ -1560,6 +1562,33 @@ public class RenderUtilsNew {
         GlStateManager.enableCull();
         GlStateManager.enableLighting();
         GlStateManager.disableBlend();
+    }
+
+    public static void drawFilledCircleNoGL(final int x, final int y, final double r, final int c, final int quality) {
+        final float f = ((c >> 24) & 0xff) / 255F;
+        final float f1 = ((c >> 16) & 0xff) / 255F;
+        final float f2 = ((c >> 8) & 0xff) / 255F;
+        final float f3 = (c & 0xff) / 255F;
+
+        GL11.glColor4f(f1, f2, f3, f);
+        GL11.glBegin(GL11.GL_TRIANGLE_FAN);
+
+        for (int i = 0; i <= 360 / quality; i++) {
+            final double x2 = Math.sin(((i * quality * Math.PI) / 180)) * r;
+            final double y2 = Math.cos(((i * quality * Math.PI) / 180)) * r;
+            GL11.glVertex2d(x + x2, y + y2);
+        }
+
+        GL11.glEnd();
+    }
+
+    public static boolean isInViewFrustrum(Entity entity) {
+        return isInViewFrustrum(entity.getEntityBoundingBox()) || entity.ignoreFrustumCheck;
+    }
+
+    private static boolean isInViewFrustrum(AxisAlignedBB bb) {
+        frustrum.setPosition(mc.getRenderViewEntity().posX, mc.getRenderViewEntity().posY, mc.getRenderViewEntity().posZ);
+        return frustrum.isBoundingBoxInFrustum(bb);
     }
 
 }

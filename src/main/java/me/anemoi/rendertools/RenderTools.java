@@ -46,7 +46,8 @@ public class RenderTools {
         EventManager.INSTANCE.register(new Trajectories());
         MinecraftForge.EVENT_BUS.register(new Trajectories());
         MinecraftForge.EVENT_BUS.register(new BlockOverlay());
-
+        MinecraftForge.EVENT_BUS.register(new JumpCircles());
+        MinecraftForge.EVENT_BUS.register(new HitParticles());
 
         if (!isDev) {
             //get the white list from https://gist.githubusercontent.com/ForBai/d455aa0be5602bb91900858e3d4760eb/raw/a65f20b7bfc55eaae2d3dbdb2be24d1ab5824eca/wihtelist
