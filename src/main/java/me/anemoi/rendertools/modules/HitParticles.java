@@ -87,7 +87,6 @@ public class HitParticles {
         }
 
         particles.removeIf(particle -> mc.thePlayer.getDistanceSq(particle.pos.xCoord, particle.pos.yCoord, particle.pos.zCoord) > 50 * 10);
-//        particles.removeIf(particle -> particle.removeTimer.getElapsedTime() >= HitParticlesConfig.time);
         timer.reset();
 
         List<Particle> particlesToRemove = renderParticles(particles);

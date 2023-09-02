@@ -21,7 +21,7 @@ public class ChinaHat {
     private void drawChinaHat(EntityLivingBase entity, float partialTicks) {
         GL11.glPushMatrix();
         GL11.glBlendFunc(770, 771);
-        GL11.glEnable(3042);
+        GL11.glEnable(GL11.GL_BLEND);
         GL11.glShadeModel(7425);
         GL11.glDisable(3553);
         GL11.glDisable(2884);
@@ -52,10 +52,10 @@ public class ChinaHat {
         GL11.glEnd();
         GL11.glLineWidth(2.0f);
         GL11.glShadeModel(7424);
-        GL11.glEnable(2884);
+        GL11.glEnable(GL11.GL_CULL_FACE);
         GlStateManager.resetColor();
-        GL11.glEnable(3553);
-        GL11.glDisable(3042);
+        GL11.glEnable(GL11.GL_TEXTURE_2D);
+        GL11.glDisable(GL11.GL_BLEND);
         GL11.glPopMatrix();
     }
 
