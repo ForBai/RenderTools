@@ -3,6 +3,7 @@ package me.anemoi.rendertools.modules
 import me.anemoi.rendertools.RenderTools.mc
 import me.anemoi.rendertools.config.modules.BreadCrumbsConfig
 import me.anemoi.rendertools.utils.RenderUtils
+import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraftforge.client.event.RenderWorldLastEvent
@@ -38,10 +39,10 @@ class BreadCrumbsNew {
         val colorAlpha = BreadCrumbsConfig.alpha / 255.0f
 
         GL11.glPushMatrix()
-        GL11.glDisable(GL11.GL_TEXTURE_2D)
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
         GL11.glEnable(GL11.GL_BLEND)
-        GL11.glDisable(GL11.GL_DEPTH_TEST)
+        GL11.glDisable(GL11.GL_TEXTURE_2D)
+//        GL11.glDisable(GL11.GL_DEPTH_TEST)
         mc.entityRenderer.disableLightmap()
         val renderPosX = mc.renderManager.viewerPosX
         val renderPosY = mc.renderManager.viewerPosY
@@ -146,9 +147,10 @@ class BreadCrumbsNew {
             }
         }
         GL11.glColor4d(1.0, 1.0, 1.0, 1.0)
-        GL11.glEnable(GL11.GL_DEPTH_TEST)
-        GL11.glDisable(GL11.GL_BLEND)
+//        GL11.glEnable(GL11.GL_DEPTH_TEST)
+        GlStateManager.resetColor()
         GL11.glEnable(GL11.GL_TEXTURE_2D)
+        GL11.glDisable(GL11.GL_BLEND)
         GL11.glPopMatrix()
     }
 

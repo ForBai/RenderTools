@@ -20,11 +20,11 @@ public class ChinaHat {
 
     private void drawChinaHat(EntityLivingBase entity, float partialTicks) {
         GL11.glPushMatrix();
-        GL11.glBlendFunc(770, 771);
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         GL11.glEnable(GL11.GL_BLEND);
-        GL11.glShadeModel(7425);
-        GL11.glDisable(3553);
-        GL11.glDisable(2884);
+        GL11.glShadeModel(GL11.GL_SMOOTH);
+        GL11.glDisable(GL11.GL_TEXTURE_2D);
+        GL11.glDisable(GL11.GL_CULL_FACE);
         GL11.glTranslated(entity.lastTickPosX + (entity.posX - entity.lastTickPosX) * (double) partialTicks - RenderTools.mc.getRenderManager().viewerPosX, entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * (double) partialTicks - RenderTools.mc.getRenderManager().viewerPosY + (double) entity.height + (entity.isSneaking() ? ChinaHatConfig.pos - 0.2 : ChinaHatConfig.pos), entity.lastTickPosZ + (entity.posZ - entity.lastTickPosZ) * (double) partialTicks - RenderTools.mc.getRenderManager().viewerPosZ);
         GL11.glRotatef((float) ((double) ((float) entity.ticksExisted + partialTicks) * ChinaHatConfig.rotation), 0.0f, 1.0f, 0.0f);
         double radius = ChinaHatConfig.radius;
@@ -51,7 +51,7 @@ public class ChinaHat {
         GL11.glVertex3d(0.0, ChinaHatConfig.height, 0.0);
         GL11.glEnd();
         GL11.glLineWidth(2.0f);
-        GL11.glShadeModel(7424);
+        GL11.glShadeModel(GL11.GL_FLAT);
         GL11.glEnable(GL11.GL_CULL_FACE);
         GlStateManager.resetColor();
         GL11.glEnable(GL11.GL_TEXTURE_2D);
