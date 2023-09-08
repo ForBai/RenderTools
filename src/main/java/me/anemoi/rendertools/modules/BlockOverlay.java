@@ -5,6 +5,7 @@ import me.anemoi.rendertools.utils.Animator;
 import me.anemoi.rendertools.utils.RenderBLockOverlay;
 import me.anemoi.rendertools.utils.RenderUtils;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockStairs;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.BlockRendererDispatcher;
 import net.minecraft.client.renderer.GlStateManager;
@@ -108,27 +109,29 @@ public class BlockOverlay {
         GL11.glPushMatrix();
         GlStateManager.disableAlpha();
         GlStateManager.enableBlend();
-        //if (!BlockOverlay.instance.getShadersListener().isUsingShaders()) {
-        GlStateManager.tryBlendFuncSeparate((int) 770, (int) 771, (int) 1, (int) 0);
-        //}
+        GlStateManager.tryBlendFuncSeparate((int) GL11.GL_SRC_ALPHA, (int) GL11.GL_ONE_MINUS_SRC_ALPHA, (int) GL11.GL_ONE, (int) GL11.GL_ZERO);
         GlStateManager.disableTexture2D();
         GlStateManager.depthMask((boolean) false);
         if (BlockOverlayConfig.ignoreDepth) {
             GlStateManager.disableDepth();
         }
-        GL11.glEnable(2848);
-        GL11.glHint(3154, 4354);
+        GL11.glEnable(GL11.GL_LINE_SMOOTH);
+        GL11.glHint(GL11.GL_LINE_SMOOTH_HINT, GL11.GL_NICEST);
         if (outline) {
             GL11.glLineWidth((float) thickness);
         }
-        GL11.glShadeModel(7425);
-        //if (block instanceof BlockStairs) {
-        //    RenderBLockOverlay.drawStairs(blockPos, mc.theWorld.getBlockState(blockPos), boundingBox.expand(this.padding, this.padding, this.padding), side, entityX, entityY, entityZ, overlayStartColor, overlayEndColor, outlineStartColor, outlineEndColor, overlay, outline);
-        //} else {
-        RenderBLockOverlay.drawBlock(boundingBox.offset(-entityX, -entityY, -entityZ), side, overlayStartColor, overlayEndColor, outlineStartColor, outlineEndColor, overlay, outline);
-        //}
+        GL11.glShadeModel(GL11.GL_SMOOTH);
+        if (BlockOverlayConfig.stairsFix) {
+            if (block instanceof BlockStairs) {
+                RenderBLockOverlay.drawStairs(blockPos, mc.theWorld.getBlockState(blockPos), boundingBox.expand(this.padding, this.padding, this.padding), side, entityX, entityY, entityZ, overlayStartColor, overlayEndColor, outlineStartColor, outlineEndColor, overlay, outline);
+            } else {
+                RenderBLockOverlay.drawBlock(boundingBox.offset(-entityX, -entityY, -entityZ), side, overlayStartColor, overlayEndColor, outlineStartColor, outlineEndColor, overlay, outline);
+            }
+        } else {
+            RenderBLockOverlay.drawBlock(boundingBox.offset(-entityX, -entityY, -entityZ), side, overlayStartColor, overlayEndColor, outlineStartColor, outlineEndColor, overlay, outline);
+        }
         GL11.glLineWidth(2.0f);
-        GL11.glDisable(2848);
+        GL11.glDisable(GL11.GL_LINE_SMOOTH);
         GlStateManager.enableDepth();
         GlStateManager.depthMask((boolean) true);
         GlStateManager.enableTexture2D();

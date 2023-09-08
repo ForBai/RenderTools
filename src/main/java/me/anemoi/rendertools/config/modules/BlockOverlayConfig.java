@@ -40,6 +40,9 @@ public class BlockOverlayConfig {
     @Switch(name = "Outline Color")
     public static boolean outlineColor = true;
 
+    @Switch(name = "Stairs Fix", description = "Fix the stairs overlay")
+    public static boolean stairsFix = true;
+
     //@Switch(name = "Slide", description = "Slide the overlay")
     //public static boolean slide = false;
 
