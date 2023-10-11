@@ -2,9 +2,9 @@ package me.anemoi.rendertools.modules;
 
 import me.anemoi.rendertools.mixin.entity.IEntityRenderer;
 import me.anemoi.rendertools.mixin.renderer.IRenderManager;
-import me.anemoi.rendertools.utils.FaceMasks;
-import me.anemoi.rendertools.utils.RenderUtilsNew;
-import me.anemoi.rendertools.utils.TessellatorUtil;
+import me.anemoi.rendertools.utils.helper.FaceMasks;
+import me.anemoi.rendertools.utils.render.RenderUtilsNew;
+import me.anemoi.rendertools.utils.render.TessellatorUtil;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.GlStateManager;

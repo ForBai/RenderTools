@@ -1,9 +1,9 @@
 package me.anemoi.rendertools.modules;
 
 import me.anemoi.rendertools.config.modules.BlockOverlayConfig;
-import me.anemoi.rendertools.utils.Animator;
-import me.anemoi.rendertools.utils.RenderBLockOverlay;
-import me.anemoi.rendertools.utils.RenderUtils;
+import me.anemoi.rendertools.utils.animation.Animator;
+import me.anemoi.rendertools.utils.render.RenderBlockOverlay;
+import me.anemoi.rendertools.utils.render.RenderUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.block.material.Material;
@@ -123,12 +123,12 @@ public class BlockOverlay {
         GL11.glShadeModel(GL11.GL_SMOOTH);
         if (BlockOverlayConfig.stairsFix) {
             if (block instanceof BlockStairs) {
-                RenderBLockOverlay.drawStairs(blockPos, mc.theWorld.getBlockState(blockPos), boundingBox.expand(this.padding, this.padding, this.padding), side, entityX, entityY, entityZ, overlayStartColor, overlayEndColor, outlineStartColor, outlineEndColor, overlay, outline);
+                RenderBlockOverlay.drawStairs(blockPos, mc.theWorld.getBlockState(blockPos), boundingBox.expand(this.padding, this.padding, this.padding), side, entityX, entityY, entityZ, overlayStartColor, overlayEndColor, outlineStartColor, outlineEndColor, overlay, outline);
             } else {
-                RenderBLockOverlay.drawBlock(boundingBox.offset(-entityX, -entityY, -entityZ), side, overlayStartColor, overlayEndColor, outlineStartColor, outlineEndColor, overlay, outline);
+                RenderBlockOverlay.drawBlock(boundingBox.offset(-entityX, -entityY, -entityZ), side, overlayStartColor, overlayEndColor, outlineStartColor, outlineEndColor, overlay, outline);
             }
         } else {
-            RenderBLockOverlay.drawBlock(boundingBox.offset(-entityX, -entityY, -entityZ), side, overlayStartColor, overlayEndColor, outlineStartColor, outlineEndColor, overlay, outline);
+            RenderBlockOverlay.drawBlock(boundingBox.offset(-entityX, -entityY, -entityZ), side, overlayStartColor, overlayEndColor, outlineStartColor, outlineEndColor, overlay, outline);
         }
         GL11.glLineWidth(2.0f);
         GL11.glDisable(GL11.GL_LINE_SMOOTH);
@@ -175,7 +175,7 @@ public class BlockOverlay {
         GlStateManager.disableTexture2D();
         if (renderMode == 1) {
             GL11.glLineWidth(1.0f);
-            RenderBLockOverlay.drawBlock(boundingBox, null, -1, -1, Color.BLACK.getRGB(), Color.BLACK.getRGB(), false, true);
+            RenderBlockOverlay.drawBlock(boundingBox, null, -1, -1, Color.BLACK.getRGB(), Color.BLACK.getRGB(), false, true);
         } else if (renderMode != 0) {
             GL11.glEnable(2848);
             GL11.glHint(3154, 4354);
@@ -183,7 +183,7 @@ public class BlockOverlay {
                 GL11.glLineWidth((float) BlockOverlayConfig.lineWidth);
             }
             GL11.glShadeModel(7425);
-            RenderBLockOverlay.drawBlock(boundingBox, renderMode == 2 ? side : null, BlockOverlayConfig.colorFO.toJavaColor().getRGB(), BlockOverlayConfig.colorSO.toJavaColor().getRGB(), BlockOverlayConfig.colorFU.toJavaColor().getRGB(), BlockOverlayConfig.colorSU.toJavaColor().getRGB(), BlockOverlayConfig.overlayColor, BlockOverlayConfig.outlineColor);
+            RenderBlockOverlay.drawBlock(boundingBox, renderMode == 2 ? side : null, BlockOverlayConfig.colorFO.toJavaColor().getRGB(), BlockOverlayConfig.colorSO.toJavaColor().getRGB(), BlockOverlayConfig.colorFU.toJavaColor().getRGB(), BlockOverlayConfig.colorSU.toJavaColor().getRGB(), BlockOverlayConfig.overlayColor, BlockOverlayConfig.outlineColor);
             GL11.glShadeModel(7424);
             GL11.glLineWidth(1.0f);
             GL11.glDisable(2848);

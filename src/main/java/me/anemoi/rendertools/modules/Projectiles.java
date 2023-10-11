@@ -3,7 +3,8 @@ package me.anemoi.rendertools.modules;
 import cc.polyfrost.oneconfig.events.event.ReceivePacketEvent;
 import cc.polyfrost.oneconfig.libs.eventbus.Subscribe;
 import me.anemoi.rendertools.config.modules.ProjectilesConfig;
-import me.anemoi.rendertools.utils.Point3dD;
+import me.anemoi.rendertools.utils.helper.Point3dD;
+import me.anemoi.rendertools.utils.render.RenderUtilsNew;
 import net.minecraft.network.play.server.S0EPacketSpawnObject;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -97,7 +98,7 @@ public class Projectiles {
             g *= fade;
             b *= fade;
             a *= fade;
-            me.anemoi.rendertools.utils.RenderUtilsNew.drawLine(pos.getVec3d(), pos.subtract(motion.getX(), motion.getY(), motion.getZ()).getVec3d(), ProjectilesConfig.color.toJavaColor(), partialTicks, false);
+            RenderUtilsNew.drawLine(pos.getVec3d(), pos.subtract(motion.getX(), motion.getY(), motion.getZ()).getVec3d(), ProjectilesConfig.color.toJavaColor(), partialTicks, false);
         }
 
         public boolean isDead() {

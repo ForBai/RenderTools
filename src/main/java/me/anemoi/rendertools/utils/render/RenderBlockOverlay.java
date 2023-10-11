@@ -1,4 +1,4 @@
-package me.anemoi.rendertools.utils;
+package me.anemoi.rendertools.utils.render;
 
 import net.minecraft.block.BlockStairs;
 import net.minecraft.block.state.IBlockState;
@@ -16,7 +16,7 @@ import java.awt.*;
 Thanks to https://hypixel.net/threads/forge-1-8-9-block-overlay-v4-0-3.1417995/
 for some parts of the code
  */
-public class RenderBLockOverlay {
+public class RenderBlockOverlay {
     private static final Tessellator TESSELLATOR = Tessellator.getInstance();
     private static final WorldRenderer WORLD_RENDERER = TESSELLATOR.getWorldRenderer();
 

@@ -1,4 +1,4 @@
-package me.anemoi.rendertools.utils;
+package me.anemoi.rendertools.utils.other;
 
 public class TimerUtil {
     long lastReset;

@@ -1,6 +1,7 @@
-package me.anemoi.rendertools.utils;
+package me.anemoi.rendertools.utils.render;
 
 
+import me.anemoi.rendertools.utils.helper.FaceMasks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;

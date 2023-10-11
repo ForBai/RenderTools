@@ -1,4 +1,4 @@
-package me.anemoi.rendertools.utils;
+package me.anemoi.rendertools.utils.other;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;

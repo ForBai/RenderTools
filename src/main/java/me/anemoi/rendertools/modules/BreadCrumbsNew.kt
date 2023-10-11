@@ -2,7 +2,7 @@ package me.anemoi.rendertools.modules
 
 import me.anemoi.rendertools.RenderTools.mc
 import me.anemoi.rendertools.config.modules.BreadCrumbsConfig
-import me.anemoi.rendertools.utils.RenderUtils
+import me.anemoi.rendertools.utils.render.RenderUtils
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer

@@ -3,12 +3,14 @@ package me.anemoi.rendertools;
 import cc.polyfrost.oneconfig.events.EventManager;
 import cc.polyfrost.oneconfig.utils.NetworkUtils;
 import cc.polyfrost.oneconfig.utils.commands.CommandManager;
-import me.anemoi.rendertools.command.ExampleCommand;
+import me.anemoi.rendertools.command.GuiCommand;
 import me.anemoi.rendertools.config.MainConfig;
 import me.anemoi.rendertools.modules.*;
-import me.anemoi.rendertools.utils.SwingHelper;
+import me.anemoi.rendertools.utils.other.SwingHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
@@ -16,7 +18,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@net.minecraftforge.fml.common.Mod(modid = RenderTools.MODID, name = RenderTools.NAME, version = RenderTools.VERSION)
+@Mod(modid = RenderTools.MODID, name = RenderTools.NAME, version = RenderTools.VERSION)
 public class RenderTools {
     public static final String MODID = "@ID@";
     public static final String NAME = "@NAME@";
@@ -28,12 +30,13 @@ public class RenderTools {
     public static boolean canUseHidden = false;
     public MainConfig config;
     private List<String> whiteListedUUIDs = new ArrayList<>();
-    public static boolean isDev = true; //if this is true in a release i am dumb
+    public static boolean isDev = true; //if this is true in a release I am dumb
 
-    @net.minecraftforge.fml.common.Mod.EventHandler
-    public void onFMLInitialization(net.minecraftforge.fml.common.event.FMLInitializationEvent event) {
+    @Mod.EventHandler
+    public void onFMLInitialization(FMLInitializationEvent event) {
         config = new MainConfig();
-        CommandManager.INSTANCE.registerCommand(new ExampleCommand());
+        CommandManager.INSTANCE.registerCommand(new GuiCommand());
+
 
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(new ChinaHat());
@@ -50,13 +53,9 @@ public class RenderTools {
         MinecraftForge.EVENT_BUS.register(new HitParticles());
 
         if (!isDev) {
-            //get the white list from https://gist.githubusercontent.com/ForBai/d455aa0be5602bb91900858e3d4760eb/raw/a65f20b7bfc55eaae2d3dbdb2be24d1ab5824eca/wihtelist
-            //and put it in the whiteListedUUIDs
             String[] lines = NetworkUtils.getString("https://gist.githubusercontent.com/ForBai/d455aa0be5602bb91900858e3d4760eb/raw/a65f20b7bfc55eaae2d3dbdb2be24d1ab5824eca/wihtelist")
                     .split("\n");
             whiteListedUUIDs.addAll(Arrays.asList(lines));
-
-            //get the uuid of the player and check if it is in the white list
             canUseHidden = whiteListedUUIDs.contains(mc.getSession().getPlayerID().replaceAll("-", ""));
         } else {
             canUseHidden = true;

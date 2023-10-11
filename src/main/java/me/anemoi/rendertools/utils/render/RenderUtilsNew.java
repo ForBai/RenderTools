@@ -1,7 +1,8 @@
-package me.anemoi.rendertools.utils;
+package me.anemoi.rendertools.utils.render;
 
 import cc.polyfrost.oneconfig.renderer.NanoVGHelper;
 import me.anemoi.rendertools.RenderTools;
+import me.anemoi.rendertools.utils.helper.Point3dD;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;

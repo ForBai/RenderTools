@@ -1,4 +1,4 @@
-package me.anemoi.rendertools.utils;
+package me.anemoi.rendertools.utils.helper;
 
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;

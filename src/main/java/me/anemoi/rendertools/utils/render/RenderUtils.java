@@ -1,4 +1,4 @@
-package me.anemoi.rendertools.utils;
+package me.anemoi.rendertools.utils.render;
 
 import net.minecraft.client.renderer.GlStateManager;
 

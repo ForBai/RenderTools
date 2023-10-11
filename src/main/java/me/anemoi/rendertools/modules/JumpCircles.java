@@ -1,7 +1,7 @@
 package me.anemoi.rendertools.modules;
 
 import me.anemoi.rendertools.config.modules.JumpCircleConfig;
-import me.anemoi.rendertools.utils.RenderUtils;
+import me.anemoi.rendertools.utils.render.RenderUtils;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;

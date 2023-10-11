@@ -1,4 +1,4 @@
-package me.anemoi.rendertools.utils;
+package me.anemoi.rendertools.utils.other;
 
 import me.anemoi.rendertools.config.modules.AnimationsConfig;
 import net.minecraft.client.entity.EntityPlayerSP;

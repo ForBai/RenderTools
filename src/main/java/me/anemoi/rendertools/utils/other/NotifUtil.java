@@ -1,4 +1,4 @@
-package me.anemoi.rendertools.utils;
+package me.anemoi.rendertools.utils.other;
 
 import cc.polyfrost.oneconfig.utils.Notifications;
 
