@@ -850,6 +850,61 @@ public class RenderUtilsNew {
             glDisable(cap);
     }
 
+    /*
+Credits to FDPClient for the original code
+https://github.com/SkidderMC/FDPClient/blob/main/LICENSE
+if there is any issue with this code please contact me on discord: Anemoi#7990
+ */
+    public static void glColorWithInts(final int red, final int green, final int blue, final int alpha) {
+        GlStateManager.color(red / 255F, green / 255F, blue / 255F, alpha / 255F);
+    }
+
+    public static void glColorWithColor(final Color color) {
+        final float red = color.getRed() / 255F;
+        final float green = color.getGreen() / 255F;
+        final float blue = color.getBlue() / 255F;
+        final float alpha = color.getAlpha() / 255F;
+
+        GlStateManager.color(red, green, blue, alpha);
+    }
+
+    public static void glColor(final Color color, final int alpha) {
+        glColor(color, alpha / 255F);
+    }
+
+    public static void glColor(final Color color, final float alpha) {
+        final float red = color.getRed() / 255F;
+        final float green = color.getGreen() / 255F;
+        final float blue = color.getBlue() / 255F;
+
+        GlStateManager.color(red, green, blue, alpha);
+    }
+
+    public static void glColorWithHex(final int hex) {
+        final float alpha = (hex >> 24 & 0xFF) / 255F;
+        final float red = (hex >> 16 & 0xFF) / 255F;
+        final float green = (hex >> 8 & 0xFF) / 255F;
+        final float blue = (hex & 0xFF) / 255F;
+
+        GlStateManager.color(red, green, blue, alpha);
+    }
+
+    public static void glColor(final int hex, final int alpha) {
+        final float red = (hex >> 16 & 0xFF) / 255F;
+        final float green = (hex >> 8 & 0xFF) / 255F;
+        final float blue = (hex & 0xFF) / 255F;
+
+        GlStateManager.color(red, green, blue, alpha / 255F);
+    }
+
+    public static void glColor(final int hex, final float alpha) {
+        final float red = (hex >> 16 & 0xFF) / 255F;
+        final float green = (hex >> 8 & 0xFF) / 255F;
+        final float blue = (hex & 0xFF) / 255F;
+
+        GlStateManager.color(red, green, blue, alpha);
+    }
+
     public static void drawScaledCustomSizeModalRect(int x, int y, float u, float v, int uWidth, int vHeight, int width, int height, float tileWidth, float tileHeight) {
         float f = 1.0F / tileWidth;
         float f1 = 1.0F / tileHeight;
@@ -1335,7 +1390,7 @@ public class RenderUtilsNew {
     }
 
     public static void drawFilledBoundingBox(AxisAlignedBB box, Color color, boolean outlined) {
-        RenderUtils.glColor(color);
+        glColorWithColor(color);
         drawFilledTopFace(box);
         drawFilledBottomFace(box);
         drawFilledNorthFace(box);
@@ -1343,14 +1398,14 @@ public class RenderUtilsNew {
         drawFilledSouthFace(box);
         drawFilledWestFace(box);
         if (outlined) {
-            RenderUtils.glColor(color, 255);
+            glColor(color, 255);
             RenderGlobal.drawSelectionBoundingBox((AxisAlignedBB) box);
         }
     }
 
     public static void drawSide(AxisAlignedBB box, EnumFacing face, Color color, boolean filled, boolean outlined) {
         if (filled) {
-            RenderUtils.glColor(color);
+            glColorWithColor(color);
         }
         switch (face) {
             case UP: {
@@ -1358,7 +1413,7 @@ public class RenderUtilsNew {
                     drawFilledTopFace(box);
                 }
                 if (!outlined) break;
-                RenderUtils.glColor(color, filled ? 255 : color.getAlpha());
+                glColor(color, filled ? 255 : color.getAlpha());
                 drawOutlinedTopFace(box);
                 break;
             }
@@ -1367,7 +1422,7 @@ public class RenderUtilsNew {
                     drawFilledBottomFace(box);
                 }
                 if (!outlined) break;
-                RenderUtils.glColor(color, filled ? 255 : color.getAlpha());
+                glColor(color, filled ? 255 : color.getAlpha());
                 drawOutlinedBottomFace(box);
                 break;
             }
@@ -1376,7 +1431,7 @@ public class RenderUtilsNew {
                     drawFilledNorthFace(box);
                 }
                 if (!outlined) break;
-                RenderUtils.glColor(color, filled ? 255 : color.getAlpha());
+                glColor(color, filled ? 255 : color.getAlpha());
                 drawOutlinedNorthFace(box);
                 break;
             }
@@ -1385,7 +1440,7 @@ public class RenderUtilsNew {
                     drawFilledEastFace(box);
                 }
                 if (!outlined) break;
-                RenderUtils.glColor(color, filled ? 255 : color.getAlpha());
+                glColor(color, filled ? 255 : color.getAlpha());
                 drawOutlinedEastFace(box);
                 break;
             }
@@ -1394,7 +1449,7 @@ public class RenderUtilsNew {
                     drawFilledSouthFace(box);
                 }
                 if (!outlined) break;
-                RenderUtils.glColor(color, filled ? 255 : color.getAlpha());
+                glColor(color, filled ? 255 : color.getAlpha());
                 drawOutlinedSouthFace(box);
                 break;
             }
@@ -1403,7 +1458,7 @@ public class RenderUtilsNew {
                     drawFilledWestFace(box);
                 }
                 if (!outlined) break;
-                RenderUtils.glColor(color, filled ? 255 : color.getAlpha());
+                glColor(color, filled ? 255 : color.getAlpha());
                 drawOutlinedWestFace(box);
             }
         }

@@ -95,10 +95,10 @@ public class JumpCircles {
                 double x = (dif * JumpCircleConfig.radius * 0.001 * Math.sin(Math.toRadians(i)));
                 double z = (dif * JumpCircleConfig.radius * 0.001 * Math.cos(Math.toRadians(i)));
 
-                RenderUtils.glColor(color.getRed(), color.getGreen(), color.getBlue(), 0);
+                RenderUtils.Helper.glColor(color.getRed(), color.getGreen(), color.getBlue(), 0);
                 GL11.glVertex3d(x / 2, 0.0, z / 2);
 
-                RenderUtils.glColor(color.getRed(), color.getGreen(), color.getBlue(), c);
+                RenderUtils.Helper.glColor(color.getRed(), color.getGreen(), color.getBlue(), c);
                 GL11.glVertex3d(x, 0.0, z);
             }
             GL11.glEnd();
