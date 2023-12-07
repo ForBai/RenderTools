@@ -37,20 +37,19 @@ public class RenderTools {
         config = new MainConfig();
         CommandManager.INSTANCE.registerCommand(new GuiCommand());
 
-
-        MinecraftForge.EVENT_BUS.register(this);
-        MinecraftForge.EVENT_BUS.register(new ChinaHat());
-        MinecraftForge.EVENT_BUS.register(new GhostBlocker());
-        //EventManager.INSTANCE.register(new Bre());
-        MinecraftForge.EVENT_BUS.register(new BreadCrumbsNew());
-        MinecraftForge.EVENT_BUS.register(new TestModule());
-        EventManager.INSTANCE.register(new TestModule());
-        EventManager.INSTANCE.register(new GhostBlocker());
-        EventManager.INSTANCE.register(new Trajectories());
-        MinecraftForge.EVENT_BUS.register(new Trajectories());
-        MinecraftForge.EVENT_BUS.register(new BlockOverlay());
-        MinecraftForge.EVENT_BUS.register(new JumpCircles());
-        MinecraftForge.EVENT_BUS.register(new HitParticles());
+        List<Object> eventHandlers = Arrays.asList(
+                this,
+                new ChinaHat(),
+                new GhostBlocker(),
+                new BreadCrumbsNew(),
+                new TestModule(),
+                new Trajectories(),
+                new BlockOverlay(),
+                new JumpCircles(),
+                new HitParticles()
+        );
+        eventHandlers.forEach(MinecraftForge.EVENT_BUS::register);
+        eventHandlers.forEach(EventManager.INSTANCE::register);
 
         if (!isDev) {
             String[] lines = NetworkUtils.getString("https://gist.githubusercontent.com/ForBai/d455aa0be5602bb91900858e3d4760eb/raw/a65f20b7bfc55eaae2d3dbdb2be24d1ab5824eca/wihtelist")

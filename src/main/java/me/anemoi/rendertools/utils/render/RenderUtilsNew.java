@@ -33,6 +33,7 @@ import static java.lang.Math.*;
 import static org.lwjgl.nanovg.NanoVG.*;
 import static org.lwjgl.opengl.GL11.*;
 
+@Deprecated
 public class RenderUtilsNew {
 
     private static final Map<Integer, Boolean> glCapMap = new HashMap<>();
