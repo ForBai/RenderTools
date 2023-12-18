@@ -74,7 +74,7 @@ class BreadCrumbsNew {
                     1f
                 } * colorAlpha
                 if (BreadCrumbsConfig.mode != 3) {
-                    RenderUtils.glColor(point.color, alpha)
+                    RenderUtils.Helper.glColor(point.color, alpha)
                 }
                 when (BreadCrumbsConfig.mode) {
                     0 -> GL11.glVertex3d(point.x - renderPosX, point.y - renderPosY, point.z - renderPosZ)
@@ -111,21 +111,21 @@ class BreadCrumbsNew {
                     3 -> {
 
                         val circleScale = BreadCrumbsConfig.sphereScale
-                        RenderUtils.glColor(point.color, 38)
+                        RenderUtils.Helper.glColor(point.color, 38)
                         GL11.glPushMatrix()
                         GL11.glTranslated(point.x - renderPosX, point.y - renderPosY, point.z - renderPosZ)
                         GL11.glScalef(circleScale * 2.3f, circleScale * 2.3f, circleScale * 2.3f)
                         GL11.glCallList(sphereList)
                         GL11.glPopMatrix()
 
-                        RenderUtils.glColor(point.color, 63)
+                        RenderUtils.Helper.glColor(point.color, 63)
                         GL11.glPushMatrix()
                         GL11.glTranslated(point.x - renderPosX, point.y - renderPosY, point.z - renderPosZ)
                         GL11.glScalef(circleScale * 1.4f, circleScale * 1.4f, circleScale * 1.4f)
                         GL11.glCallList(sphereList)
                         GL11.glPopMatrix()
 
-                        RenderUtils.glColor(point.color, 153)
+                        RenderUtils.Helper.glColor(point.color, 153)
                         GL11.glPushMatrix()
                         GL11.glTranslated(point.x - renderPosX, point.y - renderPosY, point.z - renderPosZ)
                         GL11.glScalef(circleScale * 0.7f, circleScale * 0.7f, circleScale * 0.7f)

@@ -193,7 +193,7 @@ public class BlockOverlay {
         GlStateManager.enableDepth();
         GlStateManager.enableAlpha();
         GlStateManager.enableCull();
-        RenderUtils.glColor(Color.WHITE.getRGB());
+        RenderUtils.Helper.glColor(Color.WHITE.getRGB());
         GL11.glPopMatrix();
     }
 
