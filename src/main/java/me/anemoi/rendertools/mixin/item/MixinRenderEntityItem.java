@@ -23,6 +23,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(value = {RenderEntityItem.class}, priority = 20000)
 public abstract class MixinRenderEntityItem extends Render<EntityItem> {
 
+    /*
+    TODO: FIX item sizes
+    if (ibakedmodel.isGui3d()) {
+                GlStateManager.scale(0.5f, 0.5f, 0.5f);
+            }
+     */
+
     @Shadow
     protected abstract int func_177078_a(final ItemStack p0);
 
