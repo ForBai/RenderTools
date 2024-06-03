@@ -106,7 +106,8 @@ public class HitAnimationConfig {
         swingProgress = jsonObject.get("swingProgress").getAsBoolean();
         special = jsonObject.get("special").getAsBoolean();
         rainbowEnchant = jsonObject.get("rainbowEnchant").getAsBoolean();
-        scaledSwing = jsonObject.get("scaledSwing").getAsBoolean();
+        if (jsonObject.has("scaledSwing"))
+            scaledSwing = jsonObject.get("scaledSwing").getAsBoolean();
         if (jsonObject.has("disableEquipProgressY"))
             disableEquipProgressY = jsonObject.get("disableEquipProgressY").getAsBoolean();
     };
